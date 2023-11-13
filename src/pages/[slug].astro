@@ -1,0 +1,30 @@
+---
+import "src/styles/styles.scss";
+import Layout from "../layouts/Layout.astro";
+import SectionRouter from "src/components/SectionRouter.astro";
+
+import { getPageBySlug, getPageList } from "src/lib/payloadAPI";
+
+type pageList = {
+    id: string,
+    title: string,
+    slug: string
+}
+
+export async function getStaticPaths() {
+ const pages = await getPageList();
+ return pages.data.pageList.map(({slug, title, id}: pageList) => ({
+    params:{ slug },
+    props: { title, id}
+ }))
+}
+const { slug } = Astro.params; 
+const { title, id, } = Astro.props;
+const pageData = await getPageBySlug(slug);
+---
+<Layout title={title}>
+    <main>
+        <h1>{title}</h1>
+        <SectionRouter sections={pageData.sections} />
+    </main>
+</Layout>

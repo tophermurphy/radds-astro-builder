@@ -1,0 +1,11 @@
+---
+import type { SectionRow } from "src/types/payload-types";
+interface Props {
+    section: SectionRow
+}
+const { section } = Astro.props;
+console.log('Row', section);
+---
+<section class="section __row">
+    <h3>Row</h3>
+</section>

@@ -1,0 +1,46 @@
+---
+import type {
+  SectionSection,
+  SectionRow,
+  SectionColumns,
+} from "../types/payload-types";
+import SectionContainer from "./sections/SectionContainer.astro";
+import Section from "./sections/Section.astro";
+import Row from "./sections/Row.astro";
+import Columns from "./sections/Columns.astro";
+
+type Sections = (SectionRow | SectionColumns | SectionSection)[] | undefined;
+
+interface Props {
+  sections: Sections;
+}
+
+const { sections } = Astro.props;
+
+console.log("boobs", sections);
+---
+
+  {sections && sections.map((section) => {
+    const { blockType }= section;
+    switch(true){
+        case blockType === "section":
+            return (
+                <SectionContainer options={section.section_options || {}} >
+                    <Section section={section as SectionSection} />
+                </SectionContainer>
+            );
+        case blockType === "columns": 
+        return (
+                <SectionContainer options={section.section_options || {}} >
+                    <Columns section={section as SectionColumns} />
+                </SectionContainer>
+            );
+        case blockType === "row": 
+        return (
+                <SectionContainer options={section.section_options || {}} >
+                    <Row section={section as SectionRow} />
+                </SectionContainer>
+            );
+    }
+  })}
+

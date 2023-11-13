@@ -1,0 +1,27 @@
+---
+import type { SectionOptions } from "src/types/payload-types";
+
+interface Props {
+    options: SectionOptions
+}
+
+const pMap = {
+    top_bottom: " py-4",
+    top: " pt-4",
+    bottom: " pb-4",
+    none: " nonie"
+}
+
+const { options: {width = "container", padding = "top_bottom", bg_color, variant, anchor} } = Astro.props;
+
+const pClass = pMap[padding] || " blankie";
+
+const color = typeof bg_color !== "string" ? bg_color?.name || "primary" : "primary"; 
+
+---
+<div class=`s-container __outer bg-${color}-subtle`>
+    <div class={`s-container __inner ${width}${pClass}`}>
+        <pre>{ pClass }</pre>
+        <slot />
+    </div>
+</div>
