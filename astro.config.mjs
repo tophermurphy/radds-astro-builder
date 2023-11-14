@@ -1,12 +1,13 @@
 import { defineConfig } from 'astro/config';
-import mySassplugin from './plugins/mySassPlugin';
+import payloadColorsSCSS from './plugins/vite-plugin-payload-scss-colors';
 // https://astro.build/config
 export default defineConfig({
     vite: {
-        plugins: [mySassplugin()],
+        plugins: [payloadColorsSCSS()],
         css: {
             preprocessorOptions: {
                 scss: {
+                    //? Is there a better way todo this with @use or @forward. They are not working now.
                     additionalData: `
                     @import "@bootstrap/scss/_functions.scss";
                     @import "src/styles/variables.scss";

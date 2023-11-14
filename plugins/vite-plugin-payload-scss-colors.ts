@@ -1,6 +1,7 @@
 import { writeFile } from "node:fs";
 
 import type { ThemeColor } from "src/types/payload-types";
+import 'dotenv/config';
 
 const bsThemeColors = [
   "primary",
@@ -14,16 +15,16 @@ const bsThemeColors = [
   "dark",
 ];
 
-export default function mySassplugin() {
+export default function payloadColorsSCSS() {
   return {
     name: "my-sass-plugin",
 
     async options() {
-      const res = await fetch(`http://127.0.0.1:2112/api/theme_colors`);
+      const prefix = process.env.PAYLOAD_URL || 'http://127.0.0.1:2112';
+      const res = await fetch(`${prefix}/api/theme_colors`);
       if (!res.ok) {
         throw new Error("Failed to fetch site options.");
       }
-
       const data = await res.json();
       let scssColors = "";
 
