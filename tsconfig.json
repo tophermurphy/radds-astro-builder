@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@bootstrap/*": ["node_modules/bootstrap/*"]
+      "@bootstrap/*": ["node_modules/bootstrap/*"],
     }
   }
 } 

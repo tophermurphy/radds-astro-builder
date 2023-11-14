@@ -1,0 +1,18 @@
+/* This is an auto-generated SCSS file. It gets overwritten from the CMS API. 
+Do not update this file. */
+
+@import '@bootstrap/scss/_variables.scss';
+
+$grapeape: #6c06ce;
+$secondary: #ff8000;
+$primary: #1a04c2;
+$black: #000;
+$white: #fff;
+
+$custom-colors: ( 
+"grapeape": #6c06ce,
+"black": #000,
+"white": #fff,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);

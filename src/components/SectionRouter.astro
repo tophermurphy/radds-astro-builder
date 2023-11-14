@@ -17,8 +17,10 @@ interface Props {
 
 const { sections } = Astro.props;
 
-console.log("boobs", sections);
 ---
+<style lang="scss">
+    @debug $primary;
+</style>
 
   {sections && sections.map((section) => {
     const { blockType }= section;
