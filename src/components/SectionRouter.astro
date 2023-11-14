@@ -16,33 +16,35 @@ interface Props {
 }
 
 const { sections } = Astro.props;
-
 ---
+
 <style lang="scss">
-    @debug $primary;
+  @debug $primary;
 </style>
 
-  {sections && sections.map((section) => {
-    const { blockType }= section;
-    switch(true){
+{
+  sections &&
+    sections.map((section) => {
+      const { blockType } = section;
+      switch (true) {
         case blockType === "section":
-            return (
-                <SectionContainer options={section.section_options || {}} >
-                    <Section section={section as SectionSection} />
-                </SectionContainer>
-            );
-        case blockType === "columns": 
-        return (
-                <SectionContainer options={section.section_options || {}} >
-                    <Columns section={section as SectionColumns} />
-                </SectionContainer>
-            );
-        case blockType === "row": 
-        return (
-                <SectionContainer options={section.section_options || {}} >
-                    <Row section={section as SectionRow} />
-                </SectionContainer>
-            );
-    }
-  })}
-
+          return (
+            <SectionContainer options={section.section_options || {}}>
+              <Section section={section as SectionSection} />
+            </SectionContainer>
+          );
+        case blockType === "columns":
+          return (
+            <SectionContainer options={section.section_options || {}}>
+              <Columns section={section as SectionColumns} />
+            </SectionContainer>
+          );
+        case blockType === "row":
+          return (
+            <SectionContainer options={section.section_options || {}}>
+              <Row section={section as SectionRow} />
+            </SectionContainer>
+          );
+      }
+    })
+}

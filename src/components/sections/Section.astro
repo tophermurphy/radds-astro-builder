@@ -1,10 +1,11 @@
 ---
 import type { SectionSection } from "src/types/payload-types";
+import BlockRouter from "../BlockRouter.astro";
 interface Props {
     section: SectionSection
 }
 const { section } = Astro.props;
 ---
 <section class="section __section">
-    <h3>Section</h3>
+    <BlockRouter blocks={section.blocks || []} />
 </section>

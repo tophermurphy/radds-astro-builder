@@ -1,0 +1,84 @@
+---
+import type {
+  BlockAccordion,
+  BlockButtons,
+  BlockCard,
+  BlockHeading,
+  BlockParagraph,
+  BlockTextEditor,
+  BlockDivider,
+  BlockImage,
+  BlockQuote,
+  BlockTabs,
+} from "src/types/payload-types";
+
+import type { HTMLAttributes } from "astro/types";
+
+import Accordion from "./blocks/Accordion.astro";
+import Buttons from "./blocks/Buttons.astro";
+import Card from "./blocks/Card.astro";
+import Divider from "./blocks/Divider.astro";
+import Heading from "./blocks/Heading.astro";
+import Image from "./blocks/Image.astro";
+import Paragraph from "./blocks/Paragraph.astro";
+import Quote from "./blocks/Quote.astro";
+import Tabs from "./blocks/Tabs.astro";
+import TextEditor from "./blocks/TextEditor.astro";
+import { BlockList } from "net";
+
+type Block =
+  | BlockHeading
+  | BlockParagraph
+  | BlockAccordion
+  | BlockCard
+  | BlockButtons
+  | BlockTextEditor
+  | BlockDivider
+  | BlockImage
+  | BlockQuote
+  | BlockTabs;
+
+export const BlockMap = {
+  paragraph: Paragraph,
+  heading: Heading,
+  accordion: Accordion,
+  buttons: Buttons,
+  card: Card,
+  textEditor: TextEditor,
+  divider: Divider,
+  image: Image,
+  quote: Quote,
+  tabs: Tabs,
+};
+
+type DivProps = HTMLAttributes<"div">;
+
+interface Props {
+  blocks: Block[];
+  classNames?: string;
+  width?: string;
+}
+
+const { blocks, classNames, width } = Astro.props;
+---
+
+{
+  blocks &&
+    blocks.map((block) => {
+      if (!block.blockType || !BlockMap[block.blockType]) return;
+      const classString = `block __${block.blockType}`;
+      let divProps: DivProps = {
+        style: {
+          width: width || "100%",
+        },
+        class: classNames ? classString + " " + classNames : classString,
+      };
+
+      const Component = BlockMap[block.blockType];
+      return (
+        <div {...divProps}>
+          <Component content={block} />
+        </div>
+      );
+    })
+}
