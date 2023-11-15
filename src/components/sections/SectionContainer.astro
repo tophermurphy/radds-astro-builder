@@ -16,12 +16,12 @@ const { options: {width = "container", padding = "top_bottom", bg_color, variant
 
 const pClass = pMap[padding] || " blankie";
 
-const color = typeof bg_color !== "string" ? bg_color?.name || "primary" : "primary"; 
+const defaultBg = 'bg-none'
+const bg = typeof bg_color !== "string" ?`text-bg-${bg_color?.name}` || "defaultBg" : defaultBg; 
 
 ---
-<div class=`s-container __outer bg-${color}-subtle`>
+<div class=`s-container __outer ${bg}`>
     <div class={`s-container __inner ${width}${pClass}`}>
-        <pre>{ pClass }</pre>
         <slot />
     </div>
 </div>

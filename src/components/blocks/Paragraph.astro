@@ -1,3 +1,15 @@
-<div>
-    <h2>Pagragraph</h2>
-</div>
+---
+import type { BlockParagraph } from "src/types/payload-types";
+
+interface Props {
+  content: BlockParagraph;
+}
+
+const {
+  content: { paragraph = "" },
+} = Astro.props;
+---
+
+<p>
+  {paragraph}
+</p>

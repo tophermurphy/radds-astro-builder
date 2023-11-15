@@ -1,3 +1,36 @@
-<div>
-    <h2>Buttons</h2>
+---
+import type { BlockButtons } from "src/types/payload-types";
+import PButton from "./parts/PButton.astro";
+
+interface Props {
+  content: BlockButtons;
+}
+
+const {
+  content: { size = "md", justify = "center", buttons },
+} = Astro.props;
+---
+
+<div class="buttons row" style={{justifyContent: justify}}>
+    { buttons && 
+        buttons.map((button)=>{
+            const { label, page_link, url_link, color, style, newTab } = button.button;
+            const bColor = typeof color === "string" ? "primary" : color?.name || "primary";
+            const pageLink = typeof page_link === "string" ? null : page_link?.slug || null;
+            const url = url_link || pageLink || "/";
+            const buttonStyle = style === "secondary" ? "outline" : "filled";
+            return(
+                <div class="col btn-col">
+                    <PButton label={label} url={url} color={bColor} size={size} target={newTab ? "_blank" : "_self"} />
+                    </div>
+            )
+        })
+    }
 </div>
+
+<style>
+    .btn-col {
+        width: auto;
+        flex: 0 0 auto;
+    }
+</style>

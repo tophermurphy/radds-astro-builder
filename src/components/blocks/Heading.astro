@@ -1,3 +1,15 @@
-<div>
-    <h2>Heading</h2>
-</div>
+---
+import type { BlockHeading } from "src/types/payload-types";
+
+interface Props {
+  content: BlockHeading;
+}
+const {
+  content: { size = "h2", heading = "" },
+} = Astro.props;
+const Component = size;
+---
+
+<Component>
+  {heading}
+</Component>

@@ -9,12 +9,12 @@ export default defineConfig({
                 scss: {
                     //? Is there a better way todo this with @use or @forward. They are not working now.
                     additionalData: `
-                    @import "@bootstrap/scss/_functions.scss";
+                    @import "node_modules/bootstrap/scss/_functions.scss";
                     @import "src/styles/variables.scss";
-                    @import "@bootstrap/scss/_variables.scss"; 
-                    @import "@bootstrap/scss/_variables-dark.scss"; 
-                    @import "@bootstrap/scss/_maps.scss";
-                    @import "@bootstrap/scss/_mixins.scss";
+                    @import "node_modules/bootstrap/scss/_variables.scss"; 
+                    @import "node_modules/bootstrap/scss/_variables-dark.scss"; 
+                    @import "node_modules/bootstrap/scss/_maps.scss";
+                    @import "node_modules/bootstrap/scss/_mixins.scss";
                     `,
                 }
             }

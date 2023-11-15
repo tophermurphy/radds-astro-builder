@@ -1,0 +1,6 @@
+//Set the last element of a block's margin to 0
+//May need to be overridden in some.
+
+.section > .block:last-of-type :last-child {
+    margin-bottom: 0;
+}

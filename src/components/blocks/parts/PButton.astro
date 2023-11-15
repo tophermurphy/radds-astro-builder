@@ -1,0 +1,31 @@
+---
+import "@bootstrap/scss/_buttons.scss";
+
+interface Props {
+  color?: string;
+  size?: "sm" | "md" | "lg";
+  style?: "filled" | "outline";
+  target?: "_blank" | "_parent" | "_self" | "_top";
+  label: string;
+  url: string;
+}
+
+const {
+  color = "primary",
+  size = "md",
+  style = "filled",
+  label,
+  url,
+  target = "_self"
+} = Astro.props;
+
+let className = `btn btn${style === "outline" ? "-outline" : ""}-${color}`;
+
+if (size !== "md") {
+  className += ` btn-${size}`;
+}
+---
+
+<a class={className} href={url} role="button">
+  {label}
+</a>
