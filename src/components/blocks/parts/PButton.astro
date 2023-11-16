@@ -19,8 +19,15 @@ const {
   target = "_self"
 } = Astro.props;
 
-let className = `btn btn${style === "outline" ? "-outline" : ""}-${color}`;
+let className = 'btn';
 
+//TODO update Bootstrap Mixing
+
+if( style === 'outline'){
+  className += ` btn-outline-${color} __outline`
+} else {
+  className += ` btn-${color}`
+}
 if (size !== "md") {
   className += ` btn-${size}`;
 }
@@ -29,3 +36,9 @@ if (size !== "md") {
 <a class={className} href={url} role="button">
   {label}
 </a>
+
+<style lang="scss">
+  .__outline {
+    --#{$prefix}btn-bg: #{$white};
+  }
+</style>

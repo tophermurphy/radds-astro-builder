@@ -38,9 +38,9 @@ export default function payloadColorsSCSS() {
 
       data.docs.forEach((item: ThemeColor) => {
         scssColors += `$${item.name}: ${item.color};\n`;
-        if (!bsThemeColors.includes(item.name)) {
+        // if (!bsThemeColors.includes(item.name)) {
           mapString += `"${item.name}": ${item.color},\n`;
-        }
+        // }
       });
 
       if (mapString) {

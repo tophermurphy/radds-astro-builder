@@ -74,7 +74,7 @@ const { blocks, classNames, width } = Astro.props;
         class: classNames ? classString + " " + classNames : classString,
       };
 
-      const Component = BlockMap[block.blockType];
+      const Component = BlockMap[block.blockType] as any;
       return (
         <div {...divProps}>
           <Component content={block} />
