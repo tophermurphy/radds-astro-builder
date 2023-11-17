@@ -1,3 +1,13 @@
-<div>
-  <h2>Divider</h2>
-</div>
+---
+import type { BlockDivider } from "src/types/payload-types";
+
+interface Props {
+  content: BlockDivider
+}
+
+const { content: { height, color} } = Astro.props;
+
+const dividerColor = color && typeof color !== "string" ? color.name || "black" : "black"
+const colorClass = `bg-${dividerColor}`
+---
+<div style={{height: height + 'px'}} class:list={['divider', colorClass]}></div>
