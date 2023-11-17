@@ -1,0 +1,85 @@
+---
+type ElementTypes = "heading" | "paragraph" | "upload" | "quote";
+type Headings = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+type Format = "" | "left" | "right" | "center";
+interface BaseNode {
+  children: SerializedLexicalNode[];
+  indent: number;
+  direction: "ltr" | "rtl";
+  type: ElementTypes;
+  tag?: Headings;
+  value?: PLexicalMedia["content"]["value"];
+  format: Format;
+}
+interface HeadingNode extends BaseNode {
+  tag: Headings;
+}
+interface MediaNode extends BaseNode {
+  value: PLexicalMedia["content"]["value"];
+}
+type ElementNode = BaseNode & HeadingNode & MediaNode;
+
+export interface PLexical {
+  [k: string]: unknown;
+}
+
+export type LexicalEditor = {
+  root: {
+    type: "root";
+    format: string;
+    indent: number;
+    version: number;
+    children: ElementNode[];
+  };
+};
+
+interface Props {
+    textEditor: LexicalEditor
+}
+const { textEditor } = Astro.props;
+const children = textEditor?.root?.children || [];
+
+
+console.log('children', children)
+---
+
+{
+    children.length &&
+    children.map((element, i) => {
+        const { type, indent, format } = element;
+
+        switch(type){
+            case "heading":
+                const Title = element.tag;
+            return (
+                <Title >
+                    title content
+                </Title>
+            );
+            case "paragraph": 
+            return (
+                <p>
+                    paragraph content
+                </p>
+            );
+            case "upload":
+                return (
+                    <p>
+                        upload content
+                    </p>
+                );
+            case "quote":
+                return (
+                    <blockquote>
+                        blockquote content
+                        </blockquote>
+                );
+            default: 
+            return (
+                <p>
+                    paragraph content
+                </p>
+            );
+        }
+    })
+}

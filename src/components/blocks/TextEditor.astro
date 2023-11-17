@@ -1,3 +1,14 @@
+---
+import type { BlockTextEditor } from "src/types/payload-types";
+
+import PLexical from './parts/PLexical/index.astro';
+
+interface Props {
+    content: BlockTextEditor
+}
+const { content: {textEditor}} = Astro.props;
+---
 <div>
     <h2>TextEditor</h2>
+    <PLexical textEditor={textEditor} />
 </div>
