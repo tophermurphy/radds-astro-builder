@@ -1,10 +1,21 @@
 ---
 import type { SectionRow } from "src/types/payload-types";
+import BlockRouter from "../BlockRouter.astro";
 interface Props {
-    section: SectionRow
+  section: SectionRow;
 }
-const { section } = Astro.props;
+const {
+  section: { layout = "6_6", col_1_blocks, col_2_blocks },
+} = Astro.props;
+
+const [col1, col2] = layout.split("_");
 ---
-<section class="section __row">
-    <h3>Row</h3>
+
+<section class="section __row row">
+  <div class={`col-12 col-md-${col1}`}>
+    {col_1_blocks && <BlockRouter blocks={col_1_blocks} />}
+  </div>
+  <div class={`col-12 col-md-${col2}`}>
+    {col_2_blocks && <BlockRouter blocks={col_2_blocks} />}
+  </div>
 </section>
