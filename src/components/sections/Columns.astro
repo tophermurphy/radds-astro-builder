@@ -11,7 +11,7 @@ const { columns = "2", justify = "center" } = column_options || {};
 ---
 
 <section
-  class={`section __columns row row-cols-md-${columns}${
+  class={`section __columns gy-3 row row-cols-md-${columns}${
     justify === "stretch" ? " --stretch" : ""
   }`}
   style={{ justifyContent: justify }}

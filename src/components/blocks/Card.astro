@@ -1,3 +1,40 @@
-<div>
-    <h2>Cards</h2>
+---
+import type { BlockCard } from "src/types/payload-types";
+import "@bootstrap/scss/_card.scss";
+import { Image } from "astro:assets";
+
+interface Props {
+  content: BlockCard;
+}
+const {
+  content: { title, subtitle, image, textEditor, card_color },
+} = Astro.props;
+
+const cardColor = card_color && typeof card_color !== "string" ? `text-bg-${card_color.name}` : false;
+
+let text = "Doobie doo";
+try {
+  text = JSON.stringify(textEditor || {});
+} catch {
+  text = "Lorem Ipusm";
+}
+---
+
+<div class:list={['card', cardColor]}>
+    { image && typeof image !== "string" &&
+    <Image class="card-img-top" src={image.url || ""} alt={image.alt || ''} width={image.width || 200} height={image.height || 100} />
+    }
+  <div class="card-body">
+    {title && <h3 class="card-title">{title}</h3>}
+    {subtitle && <h4 class="card-subtitle">{subtitle}</h4>}
+    <div>
+      {text}
+    </div>
+  </div>
 </div>
+
+<style lang="css" is:global>
+    .section.__columns .card {
+        height: 100%;
+    }
+</style>

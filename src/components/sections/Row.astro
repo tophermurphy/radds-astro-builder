@@ -12,10 +12,16 @@ const [col1, col2] = layout.split("_");
 ---
 
 <section class="section __row row">
-  <div class={`col-12 col-md-${col1}`}>
+  <div class={`row-col col-12 col-md-${col1}`}>
     {col_1_blocks && <BlockRouter blocks={col_1_blocks} />}
   </div>
-  <div class={`col-12 col-md-${col2}`}>
+  <div class={`row-col col-12 col-md-${col2}`}>
     {col_2_blocks && <BlockRouter blocks={col_2_blocks} />}
   </div>
 </section>
+
+<style lang="css" is:global>
+    .row-col > .block:last-of-type :last-child {
+        margin-bottom: 0;
+    }
+</style>
