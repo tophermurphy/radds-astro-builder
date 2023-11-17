@@ -12,7 +12,7 @@ import type {
   BlockTabs,
 } from "src/types/payload-types";
 
-import type { HTMLAttributes } from "astro/types";
+import type {  HTMLAttributes } from "astro/types";
 
 import Accordion from "./blocks/Accordion.astro";
 import Buttons from "./blocks/Buttons.astro";
@@ -25,6 +25,7 @@ import Quote from "./blocks/Quote.astro";
 import Tabs from "./blocks/Tabs.astro";
 import TextEditor from "./blocks/TextEditor.astro";
 import { BlockList } from "net";
+import type { JsxAttribute } from "typescript";
 
 type Block =
   | BlockHeading
@@ -51,7 +52,16 @@ export const BlockMap = {
   tabs: Tabs,
 };
 
-type DivProps = HTMLAttributes<"div">;
+interface DivProps extends HTMLAttributes<'div'> {
+  // Add your style properties here
+  style?: {
+    [key: string]: string | undefined;
+    width?: string;
+
+  };
+  // You can add more specific style properties if needed
+  className?: string;
+}
 
 interface Props {
   blocks: Block[];
@@ -68,11 +78,13 @@ const { blocks, classNames, width } = Astro.props;
       if (!block.blockType || !BlockMap[block.blockType]) return;
       const classString = `block __${block.blockType}`;
       let divProps: DivProps = {
-        style: {
-          width: width || "100%",
-        },
         class: classNames ? classString + " " + classNames : classString,
       };
+
+      if( width ){
+        divProps.style = divProps.style ?? {};
+        divProps.style.width = width;
+      }
 
       const Component = BlockMap[block.blockType] as any;
       return (

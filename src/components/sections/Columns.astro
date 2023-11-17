@@ -1,10 +1,26 @@
 ---
 import type { SectionColumns } from "src/types/payload-types";
+import BlockRouter from "../BlockRouter.astro";
 interface Props {
-    section: SectionColumns
+  section: SectionColumns;
 }
-const { section } = Astro.props;
+const {
+  section: { blocks, column_options },
+} = Astro.props;
+const { columns = "2", justify = "center" } = column_options || {};
 ---
-<section class="section __column">
-    <h3>Columns</h3>
+
+<section
+  class={`section __columns row row-cols-md-4${
+    justify === "stretch" ? " --stretch" : ""
+  }`}
+  style={{ justifyContent: justify }}
+>
+  {blocks && <BlockRouter classNames="col" blocks={blocks} />}
 </section>
+
+<style lang="css" is:global>
+    .__columns.--stretch > * {
+        flex: 1 0 auto;
+    }
+</style>
