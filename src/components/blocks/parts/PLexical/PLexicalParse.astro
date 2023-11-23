@@ -1,20 +1,8 @@
 ---
-export type SerializedLexicalNode = {
-  children?: SerializedLexicalNode[];
-  direction: string;
-  format: number;
-  indent?: string | number;
-  type: string;
-  version: number;
-  style?: string;
-  mode?: string;
-  text?: string;
-  [other: string]: any;
-};
+import type { SerializedLexicalNode, NodeProps } from './types';
 
-export interface PLexicalParse {
-  content: SerializedLexicalNode[];
-}
+import PLexicalInner from "./PLexicalInner.astro";
+
 // Text node formatting
 export const IS_BOLD = 1;
 export const IS_ITALIC = 1 << 1;
@@ -25,26 +13,7 @@ export const IS_SUBSCRIPT = 1 << 5;
 export const IS_SUPERSCRIPT = 1 << 6;
 export const IS_HIGHLIGHT = 1 << 7;
 
-interface NodeProps {
-  format: number;
-  text?: string;
-  type: string;
-  fields?: {
-    [key: string]: any;
-  };
-  children?: NodeProps[];
-}
-
-type Node = {
-  format: number;
-  text?: string;
-  type: string;
-  fields?: {
-    [key: string]: any;
-  };
-};
-
-const WrapObject = [
+export const WrapObject = [
   { test: IS_SUPERSCRIPT, component: "sup" },
   { test: IS_SUBSCRIPT, component: "sub" },
   { test: IS_CODE, component: "code" },
@@ -58,4 +27,21 @@ interface Props {
     content: SerializedLexicalNode[];
 }
 
+const {content} = Astro.props;
 ---
+{
+  !content.length ? "" :
+  content.map((item, i) => {
+    const { format, text, type, fields } = item;
+    if( type === 'linebreak'){
+     return <br/>;
+    }else if( type === "link") {
+      return <a>inner stuff</a>
+    }else if( type === "text"){
+     return <PLexicalInner children={item} />;
+    } else {
+      return null;
+    }
+  })
+}
+

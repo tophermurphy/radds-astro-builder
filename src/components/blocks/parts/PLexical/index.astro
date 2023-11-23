@@ -1,37 +1,6 @@
 ---
-type ElementTypes = "heading" | "paragraph" | "upload" | "quote";
-type Headings = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-type Format = "" | "left" | "right" | "center";
-interface BaseNode {
-  children: SerializedLexicalNode[];
-  indent: number;
-  direction: "ltr" | "rtl";
-  type: ElementTypes;
-  tag?: Headings;
-  value?: PLexicalMedia["content"]["value"];
-  format: Format;
-}
-interface HeadingNode extends BaseNode {
-  tag: Headings;
-}
-interface MediaNode extends BaseNode {
-  value: PLexicalMedia["content"]["value"];
-}
-type ElementNode = BaseNode & HeadingNode & MediaNode;
-
-export interface PLexical {
-  [k: string]: unknown;
-}
-
-export type LexicalEditor = {
-  root: {
-    type: "root";
-    format: string;
-    indent: number;
-    version: number;
-    children: ElementNode[];
-  };
-};
+import type { LexicalEditor } from './types';
+import PLexicalParse from './PLexicalParse.astro';
 
 interface Props {
     textEditor: LexicalEditor
@@ -40,7 +9,6 @@ const { textEditor } = Astro.props;
 const children = textEditor?.root?.children || [];
 
 
-console.log('children', children)
 ---
 
 {
@@ -53,13 +21,13 @@ console.log('children', children)
                 const Title = element.tag;
             return (
                 <Title >
-                    title content
+                   <PLexicalParse content={element.children} />
                 </Title>
             );
             case "paragraph": 
             return (
                 <p>
-                    paragraph content
+                    <PLexicalParse content={element.children} />
                 </p>
             );
             case "upload":
@@ -71,13 +39,13 @@ console.log('children', children)
             case "quote":
                 return (
                     <blockquote>
-                        blockquote content
-                        </blockquote>
+                        <PLexicalParse content={element.children} />
+                    </blockquote>
                 );
             default: 
             return (
                 <p>
-                    paragraph content
+                    <PLexicalParse content={element.children} />
                 </p>
             );
         }

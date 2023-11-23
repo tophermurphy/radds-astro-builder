@@ -3,9 +3,7 @@ import payloadColorsSCSS from './plugins/vite-plugin-payload-scss-colors';
 // https://astro.build/config
 export default defineConfig({
     output: "static",
-    outDir: "docs",
-    site: "https://tophermurphy.github.io/radds-astro-builder/",
-    base: "/radds-astro-builder",
+    site: "https://radds-astro.pages.dev",
     vite: {
         plugins: [payloadColorsSCSS()],
         css: {
