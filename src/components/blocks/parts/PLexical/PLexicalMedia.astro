@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import type { RemoteImageProps } from "astro:assets";
+type ImageSize = {
+  width: number;
+  height: number;
+  mimeType: string;
+  filesize: number;
+  url: string;
+  filename: string;
+};
+
+type Sizes = "thumbnail" | "small" | "medium" | "large";
+
+type ImageSizes = {
+  [key in Sizes]: ImageSize | undefined;
+};
+export interface ImageNode {
+  fields?: {
+    size?: "thumbnail" | "small" | "medium" | "large";
+    position?: "left" | "right" | "center";
+  };
+  value: ImageSize & {
+    id: string;
+    alt?: string;
+    sizes: ImageSizes;
+
+  };
+}
+
+interface Props {
+  content: ImageNode;
+}
+
+const {
+  content: {
+    fields: { size, position = "left" } = {},
+    value: { url, id, alt, filename, width = 200, height = 100, sizes },
+  },
+} = Astro.props;
+const justifyMap = {
+  left: "justify-content-start",
+  center: "justify-content-center",
+  right: "justify-content-end"
+}
+const justify = justifyMap[position] || 'justify-content-start';
+
+
+const imgSize = sizes && size !== undefined && sizes[size] ? sizes[size] : false
+
+let imageProps = {
+  width: imgSize ?imgSize.width : width,
+  height: imgSize ? imgSize.height : height,
+  src: imgSize ? imgSize.url : url,
+  alt: alt || ""
+}
+
+---
+
+<div class:list={['d-flex', justify]} >
+  <Image {...imageProps} />
+</div>

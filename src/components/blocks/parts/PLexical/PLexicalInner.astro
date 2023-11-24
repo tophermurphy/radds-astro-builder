@@ -1,5 +1,4 @@
 ---
-import type { Code } from "astro:components";
 import type { Node } from "./types";
 interface Props {
     children: Node;
@@ -44,7 +43,6 @@ if(!format){
       }
     } else {
       if(format & el.test){
-        console.log('frag2', fragment);
         let start = `<${el.component}`;
         if( el.style ){
           start += ` style="${el.style}" `;

@@ -1,53 +1,48 @@
 ---
-import type { LexicalEditor } from './types';
-import PLexicalParse from './PLexicalParse.astro';
+import type { LexicalEditor } from "./types";
+import PLexicalParse from "./PLexicalParse.astro";
+import PLexicalMedia from "./PLexicalMedia.astro";
 
 interface Props {
-    textEditor: LexicalEditor
+  textEditor: LexicalEditor;
 }
 const { textEditor } = Astro.props;
 const children = textEditor?.root?.children || [];
-
-
 ---
 
 {
-    children.length &&
+  children.length &&
     children.map((element, i) => {
-        const { type, indent, format } = element;
+      const { type, indent, format } = element;
 
-        switch(type){
-            case "heading":
-                const Title = element.tag;
-            return (
-                <Title >
-                   <PLexicalParse content={element.children} />
-                </Title>
-            );
-            case "paragraph": 
-            return (
-                <p>
-                    <PLexicalParse content={element.children} />
-                </p>
-            );
-            case "upload":
-                return (
-                    <p>
-                        upload content
-                    </p>
-                );
-            case "quote":
-                return (
-                    <blockquote>
-                        <PLexicalParse content={element.children} />
-                    </blockquote>
-                );
-            default: 
-            return (
-                <p>
-                    <PLexicalParse content={element.children} />
-                </p>
-            );
-        }
+      switch (type) {
+        case "heading":
+          const Title = element.tag;
+          return (
+            <Title>
+              <PLexicalParse content={element.children} />
+            </Title>
+          );
+        case "paragraph":
+          return (
+            <p>
+              <PLexicalParse content={element.children} />
+            </p>
+          );
+        case "upload":
+          return <PLexicalMedia content={element} />;
+        case "quote":
+          return (
+            <blockquote>
+              <PLexicalParse content={element.children} />
+            </blockquote>
+          );
+        default:
+          return (
+            <p>
+              <PLexicalParse content={element.children} />
+            </p>
+          );
+      }
     })
 }
