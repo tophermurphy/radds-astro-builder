@@ -1,3 +1,18 @@
-<div>
-    <h2>Quote</h2>
-</div>
+---
+import type { BlockQuote } from "src/types/payload-types";
+
+interface Props {
+  content: BlockQuote;
+}
+const {
+  content: { text, source, color },
+} = Astro.props;
+//TODO: Color and design
+---
+
+<figure>
+  <blockquote class="blockquote">
+    <p>{text}</p>
+  </blockquote>
+  {source && <figcaption class="blockquote-footer">{source}</figcaption>}
+</figure>

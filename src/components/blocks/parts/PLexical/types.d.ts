@@ -1,17 +1,17 @@
-export type ElementTypes = "heading" | "paragraph" | "upload" | "quote";
-export type Headings = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type ElementTypes = "heading" | "paragraph" | "upload" | "quote" | "list";
+export type Tags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "ol" | "ul";
 export type Format = "" | "left" | "right" | "center";
 export interface BaseNode {
   children: SerializedLexicalNode[];
   indent: number;
   direction: "ltr" | "rtl";
   type: ElementTypes;
-  tag?: Headings;
+  tag?: Tags;
   value?: PLexicalMedia["content"]["value"];
   format: Format;
 }
 export interface HeadingNode extends BaseNode {
-  tag: Headings;
+  tag: Tags;
 }
 export interface MediaNode extends BaseNode {
   value: PLexicalMedia["content"]["value"];

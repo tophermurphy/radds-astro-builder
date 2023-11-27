@@ -13,33 +13,49 @@ const children = textEditor?.root?.children || [];
 {
   children.length &&
     children.map((element, i) => {
-      const { type, indent, format } = element;
-
+      const { type, indent, format = "left" } = element;
+      const classnames = `text-${format}`;
+      const marginStyle = {marginLeft: `${indent}rem;`};
       switch (type) {
         case "heading":
           const Title = element.tag;
           return (
-            <Title>
+            <Title class={classnames} style={marginStyle}>
               <PLexicalParse content={element.children} />
             </Title>
           );
         case "paragraph":
           return (
-            <p>
+            <p class={classnames} style={marginStyle}>
               <PLexicalParse content={element.children} />
             </p>
           );
+          case "list":
+            const Comopnent = element.tag
+            return(
+              <Comopnent class={classnames} style={marginStyle}>
+                { element.children.map(item => (
+                  <li> 
+                    <PLexicalParse content={item.children || []} />
+                    </li>
+                ))}
+                </Comopnent>
+            );
         case "upload":
-          return <PLexicalMedia content={element} />;
+          return (
+            <div class={classnames} style={marginStyle}>
+              <PLexicalMedia content={element} />
+              </div>
+          );
         case "quote":
           return (
-            <blockquote>
+            <blockquote class={classnames} style={marginStyle}>
               <PLexicalParse content={element.children} />
             </blockquote>
           );
         default:
           return (
-            <p>
+            <p class={classnames} style={marginStyle}>
               <PLexicalParse content={element.children} />
             </p>
           );

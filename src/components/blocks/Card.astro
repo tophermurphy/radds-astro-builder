@@ -1,7 +1,9 @@
 ---
 import type { BlockCard } from "src/types/payload-types";
+import type { LexicalEditor } from "./parts/PLexical/types";
 import "@bootstrap/scss/_card.scss";
 import { Image } from "astro:assets";
+import PLexical from './parts/PLexical/index.astro';
 
 interface Props {
   content: BlockCard;
@@ -9,6 +11,7 @@ interface Props {
 const {
   content: { title, subtitle, image, textEditor, card_color },
 } = Astro.props;
+
 
 const cardColor = card_color && typeof card_color !== "string" ? `text-bg-${card_color.name}` : false;
 
@@ -28,7 +31,11 @@ try {
     {title && <h3 class="card-title">{title}</h3>}
     {subtitle && <h4 class="card-subtitle">{subtitle}</h4>}
     <div>
-      {text}
+      {
+        textEditor && 
+        <PLexical textEditor={textEditor as any} />
+
+      }
     </div>
   </div>
 </div>
@@ -37,4 +44,13 @@ try {
     .section.__columns .card {
         height: 100%;
     }
+</style>
+
+<style lang="css" >
+  .card-img-top {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 </style>

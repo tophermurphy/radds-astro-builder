@@ -1,7 +1,8 @@
 ---
-import type { SerializedLexicalNode, NodeProps } from './types';
+import type { SerializedLexicalNode } from "./types";
 
 import PLexicalInner from "./PLexicalInner.astro";
+import PButton from "../PButton.astro";
 
 // Text node formatting
 export const IS_BOLD = 1;
@@ -24,24 +25,52 @@ export const WrapObject = [
 ];
 
 interface Props {
-    content: SerializedLexicalNode[];
+  content: SerializedLexicalNode[];
 }
 
-const {content} = Astro.props;
+const { content } = Astro.props;
 ---
-{
-  !content.length ? "" :
-  content.map((item, i) => {
-    const { format, text, type, fields } = item;
-    if( type === 'linebreak'){
-     return <br/>;
-    }else if( type === "link") {
-      return <a>inner stuff</a>
-    }else if( type === "text"){
-     return <PLexicalInner children={item} />;
-    } else {
-      return null;
-    }
-  })
-}
 
+{
+  !content.length
+    ? ""
+    : content.map((item, i) => {
+        const { format, text, type, fields, children: NodeChildren } = item;
+        if (type === "linebreak") {
+          return <br />;
+        } else if (type === "link") {
+          console.log("link item", item.fields.doc.value);
+          const linkUrl =
+            fields.linkType === "internal"
+              ? "/" + fields.doc.value.slug || "/"
+              : fields.url || "/";
+
+          if (fields && fields.button === true) {
+            const internalText =
+              NodeChildren?.reduce((str, item) => {
+                return (str += item?.text ?? "");
+              }, "") || "";
+            const color = fields?.button_options?.color?.name ?? "primary";
+            return (
+              <PButton
+                color={color}
+                style={fields.button_options.style === "secondary" ? "outline" : "filled"}
+                url={linkUrl}
+                label={internalText}
+                target={fields.newTab ? "_blank" : "_self"}
+              />
+            );
+          } else {
+            return (
+              <a href={linkUrl}>
+                <PLexicalInner children={item} />
+              </a>
+            );
+          }
+        } else if (type === "text") {
+          return <PLexicalInner children={item} />;
+        } else {
+          return null;
+        }
+      })
+}
