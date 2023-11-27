@@ -1,0 +1,19 @@
+/* This is an auto-generated SCSS file. It gets overwritten from the CMS API. 
+Do not update this file. */
+
+$custom-colors: (
+'grapeape': $grapeape,
+);
+
+$custom-subtle-colors: (
+'grapeape': $grapeape-bg-subtle,
+);
+
+$custom-utilities-bg-subtle: (
+'grapeape-subtle': var(--#{$prefix}grapeape-bg-subtle),
+);
+
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors-bg-subtle: map-merge($theme-colors-bg-subtle, $custom-subtle-colors);
+$utilities-bg-subtle: map-merge($utilities-bg-subtle, $custom-utilities-bg-subtle);

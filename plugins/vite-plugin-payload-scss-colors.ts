@@ -13,6 +13,8 @@ const bsThemeColors = [
   "danger",
   "light",
   "dark",
+  "black",
+  "white"
 ];
 
 export default function payloadColorsSCSS() {
@@ -26,31 +28,51 @@ export default function payloadColorsSCSS() {
         throw new Error("Failed to fetch site options.");
       }
       const data = await res.json();
-      let scssColors = "";
 
-      let scssString =
+      let generatedComment =
         "/* This is an auto-generated SCSS file. It gets overwritten from the CMS API. \nDo not update this file. */\n\n";
-      const importString = "@import '@bootstrap/scss/_variables.scss';\n\n";
-      const mapStart = "$custom-colors: ( \n";
-      let mapString = "";
-      const mapEnd =
-        ");\n\n$theme-colors: map-merge($theme-colors, $custom-colors);\n";
+
+      let scssVars = "";
+      let scssMap = "";
+      let customColors = "";
+      let customSubtle = "";
+      let customBgSubtle = "";
+
+      let customColorsStart = "$custom-colors: (\n";
+      let customSubtleStart = "$custom-subtle-colors: (\n";
+      let customBgSubtleStart = "$custom-utilities-bg-subtle: (\n";
+      let mapMerge = `
+$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors-bg-subtle: map-merge($theme-colors-bg-subtle, $custom-subtle-colors);
+$utilities-bg-subtle: map-merge($utilities-bg-subtle, $custom-utilities-bg-subtle);
+`
 
       data.docs.forEach((item: ThemeColor) => {
-        scssColors += `$${item.name}: ${item.color};\n`;
-        // if (!bsThemeColors.includes(item.name)) {
-          mapString += `"${item.name}": ${item.color},\n`;
-        // }
+        scssVars += `$${item.name}: ${item.color};\n`;
+        if(!bsThemeColors.includes(item.name)){
+          scssVars += `$${item.name}-bg-subtle: tint-color($${item.name}, 80%);\n`;
+          customColors += `'${item.name}': $${item.name},\n`;
+          customSubtle += `'${item.name}': $${item.name}-bg-subtle,\n`;
+          customBgSubtle += `'${item.name}-subtle': var(--#{$prefix}${item.name}-bg-subtle),\n`;
+        }
       });
 
-      if (mapString) {
-        scssString +=
-          importString + scssColors + "\n" + mapStart + mapString + mapEnd;
-      } else {
-        scssString += scssColors;
+      if(customColors){
+        scssMap += customColorsStart + customColors + ');\n\n';
+        scssMap += customSubtleStart + customSubtle + ');\n\n';
+        scssMap += customBgSubtleStart + customBgSubtle + ');\n\n';
+        scssMap += mapMerge;
       }
 
-      writeFile("src/styles/_colors.scss", scssString, (err: any) => {
+      const scssVarsFile = generatedComment + scssVars;
+      const scssMapFile = generatedComment + scssMap;
+
+      writeFile("src/styles/_custom_variables.scss", scssVarsFile, (err: any) => {
+        if (err) throw err;
+        console.log("File has been written");
+      });
+
+      writeFile("src/styles/_custom_maps.scss", scssMapFile, (err: any) => {
         if (err) throw err;
         console.log("File has been written");
       });
