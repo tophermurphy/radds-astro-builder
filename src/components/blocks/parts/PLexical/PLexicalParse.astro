@@ -39,7 +39,6 @@ const { content } = Astro.props;
         if (type === "linebreak") {
           return <br />;
         } else if (type === "link") {
-          console.log("link item", item.fields.doc.value);
           const linkUrl =
             fields.linkType === "internal"
               ? "/" + fields.doc.value.slug || "/"

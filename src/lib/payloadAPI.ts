@@ -30,7 +30,7 @@ export const getAPIColors = async () => {
 }   
 
 export const getPayloadSiteOptions = async () => {
-    const res = await fetch(`${import.meta.env.PAYLOAD_URL}/api/globals/site_options`);
+    const res = await fetch(`${import.meta.env.PAYLOAD_URL}/api/globals/siteOptions?depth=4`);
     if(!res.ok){
         throw new Error("Failed to fetch site options.");
     }

@@ -1,0 +1,116 @@
+---
+import type { SiteOption, Media } from "src/types/payload-types";
+import NavbarBrandLogo from "./parts/NavbarBrandLogo.astro";
+import NavbarBrandTitle from "./parts/NavbarBrandTitle.astro";
+
+interface Options extends Required<SiteOption> {}
+interface Props {
+  header: Options["header"];
+  title?: string;
+}
+const {
+  header: { nav, logo },
+  title,
+} = Astro.props;
+---
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid" style="max-width: 1200px;">
+    {
+      logo && logo !== "string" ? (
+        <NavbarBrandLogo logo={logo as Media} title={title} />
+      ) : title ? (
+        <NavbarBrandTitle title={title} />
+      ) : null
+    }
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNav"
+      aria-controls="mainNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    {
+      nav && (
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {nav.map((item, i) => {
+              const { page, label, has_sublinks, sublinks } = item;
+              const linkLabel = label
+                ? label
+                : page && typeof page !== "string"
+                ? page.title
+                : "";
+
+              if (!has_sublinks || !sublinks) {
+                const url =
+                  page && typeof page !== "string" ? `/${page.slug}` : "/";
+                return (
+                  <li class="nav-item">
+                    <a
+                      class:list={["nav-link", { active: i === 0 }]}
+                      aria-current={`${i === 0 ? "page" : "false"}`}
+                      href={url}
+                    >
+                      {linkLabel}
+                    </a>
+                  </li>
+                );
+              } else {
+                return (
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {linkLabel}
+                    </a>
+                    <ul class="dropdown-menu">
+                      {sublinks.map((subitem) => {
+                        const sublinkUrl =
+                          typeof subitem.page !== "string"
+                            ? `/${subitem.page.slug}`
+                            : "/";
+                        const sublinkLabel = subitem.label
+                          ? subitem.label
+                          : typeof subitem.page !== "string"
+                          ? subitem.page.title
+                          : "";
+                        return (
+                          <li>
+                            <a class="dropdown-item" href={sublinkUrl}>
+                              {sublinkLabel}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </li>
+                );
+              }
+            })}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</nav>
+<script>
+  import "bootstrap/js/dist/dropdown";
+</script>
+<style lang="scss">
+  @include media-breakpoint-up(lg) {
+    .navbar-collapse {
+    flex: 0 1 auto;
+  }
+   }
+
+
+</style>

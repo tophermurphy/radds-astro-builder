@@ -1,0 +1,38 @@
+---
+import type { Media } from "src/types/payload-types";
+import { Image } from "astro:assets";
+
+interface Props {
+    logo: Media;
+    title?: string;
+}
+
+const { logo: { url, width, height, alt }, title } = Astro.props;
+
+const imageProps = {
+    src: url || "",
+    width: width || 200,
+    height: height || 100,
+    alt: title || alt || '',
+    style: {
+        width: "auto",
+        height: "40px"
+    }
+}
+
+const isH1 = !!(Astro.url.pathname === "/" || !Astro.url.pathname);
+---
+
+{
+    isH1 ? (
+      <h1 class="navbar-brand __h1 __logo mb-0">
+        <a  href="/">
+          <Image {...imageProps} />
+        </a>
+      </h1>
+    ) : (
+      <a class="navbar-brand" href="/">
+        <Image {...imageProps} />
+      </a>
+    )
+  }

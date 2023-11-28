@@ -1,9 +1,13 @@
 ---
+import { getPayloadSiteOptions } from 'src/lib/payloadAPI';
+import MainNav from "src/components/layout/MainNav.astro";
 interface Props {
 	title: string;
+	metadata?: any;
 }
 
 const { title } = Astro.props;
+const siteData = await getPayloadSiteOptions();
 ---
 
 <!doctype html>
@@ -17,6 +21,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<MainNav header={siteData.header} />
 		<slot />
 	</body>
 </html>

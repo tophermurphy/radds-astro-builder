@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+
+const isH1 = !!(Astro.url.pathname === "/" || !Astro.url.pathname);
+---
+
+{
+  isH1 ? (
+    <h1 class="navbar-brand __h1 __title mb-0">
+      <a href="/">{title}</a>
+    </h1>
+  ) : (
+    <a class="navbar-brand" href="/">
+      {title}
+    </a>
+  )
+}
