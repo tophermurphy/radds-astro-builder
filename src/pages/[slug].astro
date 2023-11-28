@@ -24,7 +24,6 @@ const pageData = await getPageBySlug(slug);
 ---
 <Layout title={title}>
     <main>
-        <h1>{title}</h1>
         <SectionRouter sections={pageData.sections} />
     </main>
 </Layout>
