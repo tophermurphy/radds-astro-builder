@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 type ImageSize = {
   width: number;
   height: number;
@@ -14,6 +13,7 @@ type Sizes = "thumbnail" | "small" | "medium" | "large";
 type ImageSizes = {
   [key in Sizes]: ImageSize | undefined;
 };
+
 export interface ImageNode {
   fields?: {
     size?: "thumbnail" | "small" | "medium" | "large";
@@ -45,17 +45,20 @@ const justifyMap = {
 const justify = justifyMap[position] || 'justify-content-start';
 
 
-const imgSize = sizes && size !== undefined && sizes[size] ? sizes[size] : false
+const imgSize = sizes && size !== undefined && sizes[size] ? sizes[size] : false;
+
+const prefix = import.meta.env.MEDIAPATH || '/media/';
+
 
 let imageProps = {
   width: imgSize ?imgSize.width : width,
   height: imgSize ? imgSize.height : height,
-  src: imgSize ? imgSize.url : url,
+  src: imgSize ? prefix + imgSize.filename : prefix + filename,
   alt: alt || ""
 }
 
 ---
 
 <div class:list={['d-flex', justify]} >
-  <Image {...imageProps} />
+  <img {...imageProps} />
 </div>

@@ -7,10 +7,15 @@ interface Props {
     title?: string;
 }
 
-const { logo: { url, width, height, alt }, title } = Astro.props;
+const { logo: { url, width, height, alt, filename = ""}, title } = Astro.props;
+
+const prefix = import.meta.env.MEDIAPATH || '/media/';
+
+let imageSrc = prefix + filename;
+
 
 const imageProps = {
-    src: url || "",
+    src: imageSrc,
     width: width || 200,
     height: height || 100,
     alt: title || alt || '',

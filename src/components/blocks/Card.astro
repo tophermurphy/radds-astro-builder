@@ -1,8 +1,6 @@
 ---
 import type { BlockCard } from "src/types/payload-types";
-import type { LexicalEditor } from "./parts/PLexical/types";
 import "@bootstrap/scss/_card.scss";
-import { Image } from "astro:assets";
 import PLexical from './parts/PLexical/index.astro';
 
 interface Props {
@@ -15,17 +13,12 @@ const {
 
 const cardColor = card_color && typeof card_color !== "string" ? `text-bg-${card_color.name}` : false;
 
-let text = "Doobie doo";
-try {
-  text = JSON.stringify(textEditor || {});
-} catch {
-  text = "Lorem Ipusm";
-}
+const prefix = import.meta.env.MEDIAPATH || '/media/';
 ---
 
 <div class:list={['card', cardColor]}>
     { image && typeof image !== "string" &&
-    <Image class="card-img-top" src={image.url || ""} alt={image.alt || ''} width={image.width || 200} height={image.height || 100} />
+    <img class="card-img-top" src={prefix + image.filename} alt={image.alt || ''} width={image.width || 200} height={image.height || 100} />
     }
   <div class="card-body">
     {title && <h3 class="card-title">{title}</h3>}

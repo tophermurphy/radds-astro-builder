@@ -1,6 +1,5 @@
 ---
 import type { BlockImage } from "src/types/payload-types";
-import { Image as AImage } from "astro:assets";
 
 interface Props {
   content: BlockImage;
@@ -17,6 +16,8 @@ const alignMap = {
   "flex-end": "align-items-end",
   center: "align-items-center",
 };
+
+const prefix = import.meta.env.MEDIAPATH || '/media/';
 ---
 
 <div
@@ -30,9 +31,9 @@ const alignMap = {
 >
   {
     image && typeof image !== "string" && (
-      <AImage
+      <img
       class:list={{'__fill-block': fill}}
-        src={image.url || ""}
+        src={prefix + image.filename}
         alt={image.alt || ""}
         width={image.width || 200}
         height={image.height || 100}
