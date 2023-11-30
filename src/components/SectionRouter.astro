@@ -3,13 +3,15 @@ import type {
   SectionSection,
   SectionRow,
   SectionColumns,
+  SectionCarousel
 } from "../types/payload-types";
 import SectionContainer from "./sections/SectionContainer.astro";
 import Section from "./sections/Section.astro";
 import Row from "./sections/Row.astro";
 import Columns from "./sections/Columns.astro";
+import Carousel from "./sections/Carousel.astro";
 
-type Sections = (SectionRow | SectionColumns | SectionSection)[] | undefined;
+type Sections = (SectionRow | SectionColumns | SectionSection | SectionCarousel)[] | undefined;
 
 interface Props {
   sections: Sections;
@@ -45,6 +47,12 @@ const { sections } = Astro.props;
               <Row section={section as SectionRow} />
             </SectionContainer>
           );
+          case blockType === "carousel": 
+          return (
+          <SectionContainer options={section.section_options || {}}>
+              <Carousel section={section as SectionCarousel} />
+            </SectionContainer>
+          )
       }
     })
 }

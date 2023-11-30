@@ -1,0 +1,66 @@
+---
+import type { SectionCarousel } from "src/types/payload-types";
+
+import "@bootstrap/scss/_carousel.scss";
+import "@bootstrap/scss/_buttons.scss";
+
+import { BlockMap } from "../BlockRouter.astro";
+import { generateUUID } from "@src/lib/utilities";
+
+interface Props {
+  section: SectionCarousel;
+}
+
+const { section } = Astro.props;
+
+const carouselID = `carousel-${section.id || generateUUID()}`;
+---
+
+<section class="section __carousel">
+  <div id={carouselID} class="carousel slide">
+    <div class="carousel-inner">
+      {
+        section.blocks &&
+          section.blocks.map((block, i) => {
+            const Component = BlockMap[block.blockType] as any;
+            return (
+              <div class:list={['carousel-item', {active: i === 0 }]}>
+                <Component content={block} />
+              </div>
+            );
+          })
+      }
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target={`#${carouselID}`}
+      data-bs-slide="prev"
+    >
+      <span class="mycarret" aria-hidden="true">&lt;</span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target={`#${carouselID}`}
+      data-bs-slide="next"
+    >
+      <span class="mycarret" aria-hidden="true">&gt;</span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
+<style lang="css">
+    /* must do something about these damn arrows */
+.mycarret {
+    color: red;
+    font-size: 2em;
+}
+</style>
+
+
+<script>
+    import "@bootstrap/js/src/carousel";
+</script>
