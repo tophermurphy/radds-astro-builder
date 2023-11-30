@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 
 const parentId = id ? `accordion-${id}` : blockType;
-const cols = parseInt(columns);
+const cols = parseInt(columns || '1');
 ---
 
 {title && <h2>{title}</h2>}
@@ -62,7 +62,7 @@ const cols = parseInt(columns);
 </div>
 
 <script>
-  import "bootstrap/js/dist/collapse";
+  import "bootstrap/js/src/collapse";
 </script>
 <style lang="scss">
     .accordion-button {

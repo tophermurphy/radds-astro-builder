@@ -4,6 +4,8 @@ import "@bootstrap/scss/_nav.scss";
 import PLexical from "./parts/PLexical/index.astro";
 import { generateUUID } from "src/lib/utilities";
 
+//TODO: Fade effect takes a few clicks
+
 interface Props {
   content: BlockTabs;
 }
@@ -73,5 +75,5 @@ const contentID = `tab-content-${UID}`;
 </div>
 
 <script>
-  import "bootstrap/js/dist/tab";
+  import "bootstrap/js/src/tab";
 </script>
