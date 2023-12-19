@@ -1,5 +1,6 @@
 ---
 import type { BlockHeading } from "src/types/payload-types";
+import type { HTMLTag } from "astro/types";
 
 interface Props {
   content: BlockHeading;
@@ -7,9 +8,7 @@ interface Props {
 const {
   content: { size = "h2", heading = "" },
 } = Astro.props;
-const Component = size;
+const Component = size as HTMLTag;
 ---
 
-<Component>
-  {heading}
-</Component>
+{size && <Component>{heading}</Component>}

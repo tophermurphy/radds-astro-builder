@@ -10,6 +10,7 @@ import type {
   BlockImage,
   BlockQuote,
   BlockTabs,
+  BlockHero
 } from "src/types/payload-types";
 
 import type {  HTMLAttributes } from "astro/types";
@@ -24,6 +25,7 @@ import Paragraph from "./blocks/Paragraph.astro";
 import Quote from "./blocks/Quote.astro";
 import Tabs from "./blocks/Tabs.astro";
 import TextEditor from "./blocks/TextEditor.astro";
+import Hero from "./blocks/Hero.astro";
 
 type Block =
   | BlockHeading
@@ -35,7 +37,8 @@ type Block =
   | BlockDivider
   | BlockImage
   | BlockQuote
-  | BlockTabs;
+  | BlockTabs
+  | BlockHero;
 
 export const BlockMap = {
   paragraph: Paragraph,
@@ -48,6 +51,7 @@ export const BlockMap = {
   image: Image,
   quote: Quote,
   tabs: Tabs,
+  hero: Hero
 };
 
 interface DivProps extends HTMLAttributes<'div'> {

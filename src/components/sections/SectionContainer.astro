@@ -14,7 +14,7 @@ const pMap = {
 
 const { options: {width = "container", padding = "top_bottom", bg_color, variant, anchor} } = Astro.props;
 
-const pClass = pMap[padding] || " blankie";
+const pClass = pMap[padding || "top_bottom"] || " blankie";
 
 const defaultBg = 'bg-none'
 const bg = typeof bg_color !== "string" ?`text-bg-${bg_color?.name}` || "defaultBg" : defaultBg; 

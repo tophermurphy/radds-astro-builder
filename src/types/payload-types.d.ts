@@ -52,6 +52,7 @@ export interface SectionSection {
         | BlockImage
         | BlockQuote
         | BlockTabs
+        | BlockHero
       )[]
     | null;
   section_options?: SectionOptions;
@@ -201,6 +202,34 @@ export interface BlockTabs {
   blockName?: string | null;
   blockType: 'tabs';
 }
+export interface BlockHero {
+  image: string | Media;
+  textEditor?:
+    | {
+        [k: string]: unknown;
+      }[]
+    | null;
+  min_height: number;
+  text_width: number;
+  text_location:
+    | 'top_left'
+    | 'top_center'
+    | 'top_right'
+    | 'center_left'
+    | 'center_center'
+    | 'center_right'
+    | 'bottom_left'
+    | 'bottom_center'
+    | 'bottom_right';
+  image_opacity: number;
+  add_gradient?: boolean | null;
+  gradient_direction?: ('left_right' | 'right_left') | null;
+  gradient_opacity?: number | null;
+  gradient_width?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
 export interface SectionOptions {
   width?: ('container' | 'container-sm' | 'container-full' | 'container-bleed') | null;
   padding?: ('top_bottom' | 'top' | 'bottom' | 'none') | null;
@@ -266,11 +295,18 @@ export interface ColumnOptions {
   justify?: ('flex-start' | 'center' | 'flex-end' | 'stretch') | null;
 }
 export interface SectionCarousel {
-  blocks?: BlockImage[] | null;
+  blocks?: (BlockImage | BlockHero)[] | null;
+  carousel_options: CarouselOptions;
   section_options?: SectionOptions;
   id?: string | null;
   blockName?: string | null;
   blockType: 'carousel';
+}
+export interface CarouselOptions {
+  height: number;
+  controls: 'arrows' | 'indicators' | 'arrows_indicators';
+  mobile_height: number;
+  mobile_controls: 'arrows' | 'indicators' | 'arrows_indicators';
 }
 export interface User {
   id: string;

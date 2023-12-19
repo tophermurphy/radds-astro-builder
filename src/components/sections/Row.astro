@@ -8,7 +8,7 @@ const {
   section: { layout = "6_6", col_1_blocks, col_2_blocks },
 } = Astro.props;
 
-const [col1, col2] = layout.split("_");
+const [col1, col2] = (layout || '6_6').split("_");
 ---
 
 <section class="section __row row">
