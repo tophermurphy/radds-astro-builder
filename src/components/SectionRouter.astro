@@ -20,10 +20,6 @@ interface Props {
 const { sections } = Astro.props;
 ---
 
-<style lang="scss">
-  @debug $primary;
-</style>
-
 {
   sections &&
     sections.map((section) => {

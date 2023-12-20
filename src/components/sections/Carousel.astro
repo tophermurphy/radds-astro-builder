@@ -7,24 +7,44 @@ import "@bootstrap/scss/_buttons.scss";
 import { BlockMap } from "../BlockRouter.astro";
 import { generateUUID } from "@src/lib/utilities";
 
+import ChevronLeft from "@src/icons/chevron_left.svg?raw";
+import ChevronRight from "@src/icons/chevron_right.svg?raw";
+
 interface Props {
   section: SectionCarousel;
 }
 
 const { section } = Astro.props;
 
+const blocksLength = section.blocks?.length || 0;
+
 const carouselID = `carousel-${section.id || generateUUID()}`;
+
+//@TODO Show indicators according to CMS mobile desktop
 ---
 
 <section class="section __carousel">
   <div id={carouselID} class="carousel slide">
+    {
+      blocksLength &&
+      (
+        <div class="carousel-indicators">
+          {
+            [...Array(blocksLength)].map((_, i) => (
+      <button type="button" class:list={{ active: i === 0}} data-bs-target={`#${carouselID}`} data-bs-slide-to={i} aria-current={!!(i === 0)} aria-label={`Slide ${i}`}></button>
+      ))
+          }
+          </div>
+      )
+  
+    }
     <div class="carousel-inner">
       {
         section.blocks &&
           section.blocks.map((block, i) => {
             const Component = BlockMap[block.blockType] as any;
             return (
-              <div class:list={['carousel-item', {active: i === 0 }]}>
+              <div class:list={["carousel-item", { active: i === 0 }]}>
                 <Component content={block} />
               </div>
             );
@@ -37,7 +57,9 @@ const carouselID = `carousel-${section.id || generateUUID()}`;
       data-bs-target={`#${carouselID}`}
       data-bs-slide="prev"
     >
-      <span class="mycarret" aria-hidden="true">&lt;</span>
+      <span class="carousel-arrow">
+        <Fragment set:html={ChevronLeft} />
+      </span>
       <span class="visually-hidden">Previous</span>
     </button>
     <button
@@ -46,21 +68,35 @@ const carouselID = `carousel-${section.id || generateUUID()}`;
       data-bs-target={`#${carouselID}`}
       data-bs-slide="next"
     >
-      <span class="mycarret" aria-hidden="true">&gt;</span>
+      <span class="carousel-arrow">
+        <Fragment set:html={ChevronRight} />
+      </span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
 </section>
 
-<style lang="css">
-    /* must do something about these damn arrows */
-.mycarret {
-    color: red;
-    font-size: 2em;
-}
+<style lang="scss" scoped>
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 48px;
+  }
+  .carousel-arrow {
+    fill: #000;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 80px;
+      height: 80px;
+    }
+  }
 </style>
 
-
 <script>
-    import "@bootstrap/js/src/carousel";
+  import "@bootstrap/js/src/carousel";
 </script>
