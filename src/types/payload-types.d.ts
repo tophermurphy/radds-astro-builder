@@ -384,37 +384,12 @@ export interface SiteOption {
   header?: {
     logo?: string | Media | null;
     main_nav?: (string | null) | Menu;
-    nav?:
-      | {
-          page?: (string | null) | Page;
-          label?: string | null;
-          has_sublinks?: boolean | null;
-          sublinks?:
-            | {
-                page: string | Page;
-                label?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-        }[]
-      | null;
   };
   footer?: {
     logo?: string | Media | null;
     copywrite_year?: string | null;
     colophon?: string | null;
-    footer_nav?: ('none' | 'main_nav' | 'site_map' | 'custom') | null;
-    footer_links?:
-      | {
-          label: string;
-          link_type?: ('page' | 'url') | null;
-          newTab?: boolean | null;
-          page_link?: (string | null) | Page;
-          url_link?: string | null;
-          id?: string | null;
-        }[]
-      | null;
+    footer_nav?: (string | null) | Menu;
   };
   contact?: {
     name?: string | null;

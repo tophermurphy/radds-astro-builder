@@ -1,6 +1,7 @@
 ---
 import { getPayloadSiteOptions } from 'src/lib/payloadAPI';
 import MainNav from "src/components/layout/MainNav.astro";
+import MainFooter from '@components/layout/MainFooter.astro';
 import '@fontsource/material-icons';
 
 interface Props {
@@ -10,9 +11,6 @@ interface Props {
 
 const { title } = Astro.props;
 const siteData = await getPayloadSiteOptions();
-console.log('main nav', siteData.header.main_nav);
-const sublinks = siteData.header.main_nav.nav.map((i:any) => i.sublinks);
-console.log('sublinks', sublinks);
 ---
 
 <!doctype html>
@@ -28,6 +26,7 @@ console.log('sublinks', sublinks);
 	<body>
 		<MainNav header={siteData.header} />
 		<slot />
+		<MainFooter footer={siteData.footer} />
 	</body>
 </html>
 

@@ -17,7 +17,7 @@ const mainNav = typeof main_nav !== 'string' && main_nav ? main_nav.nav || [] : 
 ---
 
 <nav class="navbar navbar-expand-lg">
-  <div class="container-fluid" style="max-width: 1200px;">
+  <div class="container-fluid site-max" >
     {
       logo && logo !== "string" ? (
         <NavbarBrandLogo logo={logo as Media} title={title} />

@@ -1,3 +1,80 @@
-<footer>
-    Hai Imma footer
+---
+import type { SiteOption } from "src/types/payload-types";
+
+interface Options extends Required<SiteOption> {}
+
+interface Props {
+  footer: Options["footer"];
+}
+
+const {
+  footer: { logo, copywrite_year, colophon, footer_nav },
+} = Astro.props;
+
+const copywrite = copywrite_year || new Date().getFullYear();
+console.log("footernav", footer_nav);
+
+// @TODO: sublinks, link styling
+---
+
+<footer class="site-footer">
+  {
+    (logo || footer_nav) && (
+      <div class="footer-bg">
+        <div class="footer-container container-fluid site-max">
+          <div class="row footer-nav">
+            {logo && typeof logo !== "string" && (
+              <div class="footer-logo col-auto">
+                <a href="/">
+                  <img
+                    src={logo.url || ""}
+                    alt={logo.alt || ""}
+                    class="img-fluid"
+                  />
+                </a>
+              </div>
+            )}
+            {footer_nav &&
+              typeof footer_nav !== "string" &&
+              footer_nav?.nav?.length &&
+              footer_nav.nav.map((item, i) => (
+                <div class="footer-col col-auto">
+                  {item.page && typeof item.page !== "string" ? (
+                    <a href={item.page.slug} class="col-header">
+                      {item.label ? item.label : item.page.title}
+                    </a>
+                  ) : (
+                    <div class="col-header">{item.label || ""}</div>
+                  )}
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="colophon-bg">
+    <div class="footer-container container-fluid site-max">
+      <div class="colophon">
+        <span class="__date">
+          &copy;
+          <!-- @ts-ignore -->
+          <time datetime={copywrite}>{copywrite}</time>
+        </span>
+        {colophon && <span class="__text">{colophon}</span>}
+      </div>
+    </div>
+  </div>
 </footer>
+
+<style lang="scss">
+  .footer-bg {
+    background: #000;
+    padding: 2rem 0;
+  }
+  .footer-logo img {
+    width: 200px;
+    max-width: 100%;
+  }
+</style>
