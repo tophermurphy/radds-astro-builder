@@ -24,6 +24,7 @@ export interface Config {
     media: Media;
     theme_colors: ThemeColor;
     users: User;
+    menus: Menu;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -321,6 +322,27 @@ export interface User {
   lockUntil?: string | null;
   password: string | null;
 }
+export interface Menu {
+  id: string;
+  name: string;
+  nav?:
+    | {
+        page?: (string | null) | Page;
+        label?: string | null;
+        has_sublinks?: boolean | null;
+        sublinks?:
+          | {
+              page: string | Page;
+              label?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
 export interface PayloadPreference {
   id: string;
   user: {
@@ -361,6 +383,7 @@ export interface SiteOption {
   };
   header?: {
     logo?: string | Media | null;
+    main_nav?: (string | null) | Menu;
     nav?:
       | {
           page?: (string | null) | Page;

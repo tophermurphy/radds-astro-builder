@@ -10,6 +10,9 @@ interface Props {
 
 const { title } = Astro.props;
 const siteData = await getPayloadSiteOptions();
+console.log('main nav', siteData.header.main_nav);
+const sublinks = siteData.header.main_nav.nav.map((i:any) => i.sublinks);
+console.log('sublinks', sublinks);
 ---
 
 <!doctype html>

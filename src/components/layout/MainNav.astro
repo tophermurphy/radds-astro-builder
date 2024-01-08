@@ -9,9 +9,11 @@ interface Props {
   title?: string;
 }
 const {
-  header: { nav, logo },
+  header: { logo, main_nav },
   title,
 } = Astro.props;
+
+const mainNav = typeof main_nav !== 'string' && main_nav ? main_nav.nav || [] : [];
 ---
 
 <nav class="navbar navbar-expand-lg">
@@ -35,10 +37,10 @@ const {
       <span class="navbar-toggler-icon"></span>
     </button>
     {
-      nav && (
+      mainNav.length && (
         <div class="collapse navbar-collapse" id="mainNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            {nav.map((item, i) => {
+            {mainNav.map((item, i) => {
               const { page, label, has_sublinks, sublinks } = item;
               const linkLabel = label
                 ? label

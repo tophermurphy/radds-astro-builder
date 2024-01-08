@@ -21,6 +21,8 @@ const blocksLength = section.blocks?.length || 0;
 const carouselID = `carousel-${section.id || generateUUID()}`;
 
 //@TODO Show indicators according to CMS mobile desktop
+
+const { height, controls, mobile_height, mobile_controls } = section.carousel_options;
 ---
 
 <section class="section __carousel">
