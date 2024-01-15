@@ -1,5 +1,5 @@
 ---
-import type { SiteOption } from "src/types/payload-types";
+import type { SiteOption, Menu, Page } from "src/types/payload-types";
 
 interface Options extends Required<SiteOption> {}
 
@@ -13,6 +13,21 @@ const {
 
 const copywrite = copywrite_year || new Date().getFullYear();
 console.log("footernav", footer_nav);
+
+type SubLink = {
+  page: string | Page;
+  label?: string | null;
+  id?: string | null;
+};
+
+const returnSublinks = (links: SubLink[]) =>
+  links.reduce((acc, cv) => {
+    return typeof cv.page === "string"
+      ? acc
+      : (acc += `<a class="sublink" href="${cv.page.slug}">${
+          cv.label || cv.page.title
+        }</a>`);
+  }, "");
 
 // @TODO: sublinks, link styling
 ---
@@ -38,13 +53,27 @@ console.log("footernav", footer_nav);
               typeof footer_nav !== "string" &&
               footer_nav?.nav?.length &&
               footer_nav.nav.map((item, i) => (
-                <div class="footer-col col-auto">
+                <div class:list={['footer-col', 'col-auto', {['ms-auto']: i === 0}]}>
                   {item.page && typeof item.page !== "string" ? (
-                    <a href={item.page.slug} class="col-header">
-                      {item.label ? item.label : item.page.title}
-                    </a>
+                    <>
+                      <a href={item.page.slug} class="col-header">
+                        {item.label ? item.label : item.page.title}
+                      </a>
+                      {item.has_sublinks &&
+                        item.sublinks &&
+                        item.sublinks.length && (
+                          <Fragment set:html={returnSublinks(item.sublinks)} />
+                        )}
+                    </>
                   ) : (
-                    <div class="col-header">{item.label || ""}</div>
+                    <>
+                      <div class="col-header">{item.label || ""}</div>
+                      {item.has_sublinks &&
+                        item.sublinks &&
+                        item.sublinks.length && (
+                          <Fragment set:html={returnSublinks(item.sublinks)} />
+                        )}
+                    </>
                   )}
                 </div>
               ))}
@@ -76,5 +105,16 @@ console.log("footernav", footer_nav);
   .footer-logo img {
     width: 200px;
     max-width: 100%;
+  }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+</style>
+<style lang="scss" is:global>
+  .col-header,
+  .footer-col .sublink {
+    color: $white;
   }
 </style>
