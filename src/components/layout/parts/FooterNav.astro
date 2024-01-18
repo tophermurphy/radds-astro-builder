@@ -1,0 +1,48 @@
+---
+import type { Menu } from "@src/types/payload-types";
+
+import FooterSubLinks from "./FooterSubLinks.astro";
+
+interface Props {
+  nav: Menu["nav"];
+}
+
+const { nav } = Astro.props;
+---
+
+{
+  nav &&
+    nav.map((item, i) => (
+      <div class:list={["footer-col", "col-auto"]}>
+        {item.page && typeof item.page !== "string" ? (
+          <>
+            <a href={item.page.slug} class="col-header">
+              {item.label ? item.label : item.page.title}
+            </a>
+            <FooterSubLinks sublinks={item.sublinks} />
+          </>
+        ) : (
+          <>
+            <div class="col-header">{item.label || ""}</div>
+            {item.has_sublinks && item.sublinks && item.sublinks.length && (
+              <FooterSubLinks sublinks={item.sublinks} />
+            )}
+          </>
+        )}
+      </div>
+    ))
+}
+
+<style lang="scss">
+    .footer-col {
+        display: flex;
+        flex-direction: column;
+        color: $white;
+        a {
+            color: $white;
+        }
+    }
+    .col-header {
+        font-weight: 800;
+    }
+</style>

@@ -1,5 +1,7 @@
 ---
-import type { SiteOption, Menu, Page } from "src/types/payload-types";
+import type { SiteOption, Page } from "src/types/payload-types";
+
+import FooterNav from "./parts/FooterNav.astro";
 
 interface Options extends Required<SiteOption> {}
 
@@ -19,17 +21,6 @@ type SubLink = {
   label?: string | null;
   id?: string | null;
 };
-
-const returnSublinks = (links: SubLink[]) =>
-  links.reduce((acc, cv) => {
-    return typeof cv.page === "string"
-      ? acc
-      : (acc += `<a class="sublink" href="${cv.page.slug}">${
-          cv.label || cv.page.title
-        }</a>`);
-  }, "");
-
-// @TODO: sublinks, link styling
 ---
 
 <footer class="site-footer">
@@ -51,32 +42,7 @@ const returnSublinks = (links: SubLink[]) =>
             )}
             {footer_nav &&
               typeof footer_nav !== "string" &&
-              footer_nav?.nav?.length &&
-              footer_nav.nav.map((item, i) => (
-                <div class:list={['footer-col', 'col-auto', {['ms-auto']: i === 0}]}>
-                  {item.page && typeof item.page !== "string" ? (
-                    <>
-                      <a href={item.page.slug} class="col-header">
-                        {item.label ? item.label : item.page.title}
-                      </a>
-                      {item.has_sublinks &&
-                        item.sublinks &&
-                        item.sublinks.length && (
-                          <Fragment set:html={returnSublinks(item.sublinks)} />
-                        )}
-                    </>
-                  ) : (
-                    <>
-                      <div class="col-header">{item.label || ""}</div>
-                      {item.has_sublinks &&
-                        item.sublinks &&
-                        item.sublinks.length && (
-                          <Fragment set:html={returnSublinks(item.sublinks)} />
-                        )}
-                    </>
-                  )}
-                </div>
-              ))}
+              footer_nav?.nav?.length && <FooterNav nav={footer_nav.nav} />}
           </div>
         </div>
       </div>
@@ -106,15 +72,5 @@ const returnSublinks = (links: SubLink[]) =>
     width: 200px;
     max-width: 100%;
   }
-  .footer-col {
-    display: flex;
-    flex-direction: column;
-  }
+</style>
 
-</style>
-<style lang="scss" is:global>
-  .col-header,
-  .footer-col .sublink {
-    color: $white;
-  }
-</style>

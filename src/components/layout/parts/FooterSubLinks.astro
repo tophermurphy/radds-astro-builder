@@ -1,0 +1,34 @@
+---
+import type { Page } from "@src/types/payload-types";
+
+type SubLink = {
+  page: string | Page;
+  label?: string | null;
+  id?: string | null;
+};
+
+interface Props {
+  sublinks?: SubLink[] | null;
+}
+
+const { sublinks, ...rest } = Astro.props;
+---
+
+{
+  sublinks && sublinks.length ?
+    sublinks.map((link) => {
+      const url = typeof link.page !== "string" ? "/" + link.page.slug : "/";
+      const label = link.label
+        ? link.label
+        : typeof link.page !== "string"
+          ? link.page.title
+          : "";
+      return (
+        <a class="footer-sublink" href={url} {...rest}>
+          {label}
+        </a>
+      );
+    })
+    : 
+    null
+}
