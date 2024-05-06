@@ -22,7 +22,7 @@ export default function payloadColorsSCSS() {
     name: "my-sass-plugin",
     //TODO: add subtle-colors, maybe setup in PayloadCMS
     async options() {
-      const prefix = process.env.PAYLOAD_URL || 'http://127.0.0.1:2112';
+      const prefix = process.env.PAYLOAD_URL;
       const res = await fetch(`${prefix}/api/theme_colors`);
       if (!res.ok) {
         throw new Error("Failed to fetch site options.");
