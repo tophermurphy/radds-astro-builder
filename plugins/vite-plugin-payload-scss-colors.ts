@@ -17,12 +17,15 @@ const bsThemeColors = [
   "white"
 ];
 
+
+
 export default function payloadColorsSCSS() {
+  console.log('processENV', process.env)
   return {
     name: "my-sass-plugin",
     //TODO: add subtle-colors, maybe setup in PayloadCMS
     async options() {
-      const prefix = import.meta.env.PAYLOAD_URL;
+      const prefix = process.env.PAYLOAD_URL || 'http://127.0.0.1:2112';
       const res = await fetch(`${prefix}/api/theme_colors`);
       if (!res.ok) {
         throw new Error("Failed to fetch site options.");
