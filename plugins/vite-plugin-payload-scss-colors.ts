@@ -20,7 +20,6 @@ const bsThemeColors = [
 
 
 export default function payloadColorsSCSS() {
-  console.log('processENV', process.env)
   return {
     name: "my-sass-plugin",
     //TODO: add subtle-colors, maybe setup in PayloadCMS
