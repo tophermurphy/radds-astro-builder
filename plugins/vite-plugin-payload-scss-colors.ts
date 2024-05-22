@@ -85,7 +85,7 @@ $utilities-border-subtle: map-merge($utilities-border-subtle, $custom-utility-bo
           customColors += `'${item.name}': $${item.name},\n`;
           customBgSubtle += `'${item.name}': $${item.name}-bg-subtle,\n`;
           customUtilityBgSubtle += `'${item.name}-subtle': var(--#{$prefix}${item.name}-bg-subtle),\n`;
-          customText += `'${item.name}': $${item.name}-border-subtle \n`;
+          customText += `'${item.name}': $${item.name}-text-emphasis, \n`;
           customUtilityTextEmphasis += `'${item.name}-emphasis': var(--#{$prefix}${item.name}-text-emphasis),\n`;
           customBorderSubtle += `'${item.name}': $${item.name}-border-subtle,\n`;
           customUtilityBorderSubtle += `'${item.name}-subtle': var(--#{$prefix}${item.name}--border-subtle),\n`;
