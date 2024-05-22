@@ -3,6 +3,8 @@ Do not update this file. */
 
 $grapeape: #6c06ce;
 $grapeape-bg-subtle: tint-color($grapeape, 80%);
+$grapeape-text-emphasis: shade-color($grapeape, 60%);
+$grapeape-border-subtle: tint-color($grapeape, 60%);
 $secondary: #ff8000;
 $primary: #038501;
 $black: #000;

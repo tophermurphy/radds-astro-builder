@@ -1,3 +1,6 @@
+// @import "./custom_variables";
+// @import "./variables.scss";
+
 //Set the last element of a block's margin to 0
 //May need to be overridden in some.
 
@@ -10,5 +13,5 @@
 
 
 .site-max {
-    max-width: $site-max-width;
+    // max-width: $site-max-width;
 }

@@ -1,0 +1,57 @@
+/* This is an auto-generated SCSS file. It gets overwritten from the CMS API. 
+Do not update this file. */
+
+@import "./custom_color_variables";
+@import "@bootstrap/scss/variables";
+@import "@bootstrap/scss/variables-dark";
+@import "@bootstrap/scss/maps";
+
+
+$custom-colors: (
+'grapeape': $grapeape,
+);
+
+$custom-subtle-colors: (
+'grapeape': $grapeape-bg-subtle,
+);
+
+$custom-utilities-bg-subtle: (
+'grapeape-subtle': var(--#{$prefix}grapeape-bg-subtle),
+);
+
+$custom-text-emphasis: (
+'grapeape': $grapeape-border-subtle 
+);
+
+$custom-utitity-text-emphasis: (
+'grapeape-emphasis': var(--#{$prefix}grapeape-text-emphasis),
+);
+
+$custom-border-subtle: (
+'grapeape': $grapeape-border-subtle,
+);
+
+$custom-utility-border-subtle: (
+'grapeape-subtle': var(--#{$prefix}grapeape--border-subtle),
+);
+
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors-bg-subtle: map-merge($theme-colors-bg-subtle, $custom-subtle-colors);
+$utilities-bg-subtle: map-merge($utilities-bg-subtle, $custom-utilities-bg-subtle);
+$theme-colors-text: map-merge($theme-colors-text, $custom-text-emphasis);
+$utilities-text-emphasis-colors: map-merge($utilities-text-emphasis-colors, $custom-utitity-text-emphasis);
+$theme-colors-border-subtle: map-merge($theme-colors-border-subtle, $custom-border-subtle);
+$utilities-border-subtle: map-merge($utilities-border-subtle, $custom-utility-border-subtle);
+
+// Additional utility maps, hopefully this can be streamlined at some point.
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+$utilities-colors: $theme-colors-rgb;
+$utilities-text: map-merge( $utilities-colors, ("black": to-rgb($black),"white": to-rgb($white),"body": to-rgb($body-color)));
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, "$key", "text");
+$utilities-bg: map-merge(
+$utilities-colors, ( "black": to-rgb($black), "white": to-rgb($white), "body": to-rgb($body-bg)));
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg");
+$utilities-border: map-merge( $utilities-colors, ( "black": to-rgb($black),"white": to-rgb($white)));
+$utilities-border-colors: map-loop($utilities-border, rgba-css-var, "$key", "border");
+      
