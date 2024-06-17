@@ -8,30 +8,37 @@ Do not update this file. */
 
 
 $custom-colors: (
+'balloon-knot': $balloon-knot,
 'grapeape': $grapeape,
 );
 
 $custom-subtle-colors: (
+'balloon-knot': $balloon-knot-bg-subtle,
 'grapeape': $grapeape-bg-subtle,
 );
 
 $custom-utilities-bg-subtle: (
+'balloon-knot-subtle': var(--#{$prefix}balloon-knot-bg-subtle),
 'grapeape-subtle': var(--#{$prefix}grapeape-bg-subtle),
 );
 
 $custom-text-emphasis: (
-'grapeape': $grapeape-border-subtle 
+'balloon-knot': $balloon-knot-text-emphasis, 
+'grapeape': $grapeape-text-emphasis, 
 );
 
 $custom-utitity-text-emphasis: (
+'balloon-knot-emphasis': var(--#{$prefix}balloon-knot-text-emphasis),
 'grapeape-emphasis': var(--#{$prefix}grapeape-text-emphasis),
 );
 
 $custom-border-subtle: (
+'balloon-knot': $balloon-knot-border-subtle,
 'grapeape': $grapeape-border-subtle,
 );
 
 $custom-utility-border-subtle: (
+'balloon-knot-subtle': var(--#{$prefix}balloon-knot--border-subtle),
 'grapeape-subtle': var(--#{$prefix}grapeape--border-subtle),
 );
 
