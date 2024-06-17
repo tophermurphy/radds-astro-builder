@@ -1,11 +1,15 @@
 /* This is an auto-generated SCSS file. It gets overwritten from the CMS API. 
 Do not update this file. */
 
+$balloon-knot: #3c2401;
+$balloon-knot-bg-subtle: tint-color($balloon-knot, 80%);
+$balloon-knot-text-emphasis: shade-color($balloon-knot, 60%);
+$balloon-knot-border-subtle: tint-color($balloon-knot, 60%);
 $grapeape: #6c06ce;
 $grapeape-bg-subtle: tint-color($grapeape, 80%);
 $grapeape-text-emphasis: shade-color($grapeape, 60%);
 $grapeape-border-subtle: tint-color($grapeape, 60%);
-$secondary: #ff8000;
+$secondary: #ff0000;
 $primary: #038501;
 $black: #000;
 $white: #fff;
