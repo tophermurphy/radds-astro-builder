@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     env:
-      env-file: .env.production
       PAYLOAD_URL: "https://p80payload-test-ca.icyground-d68f8c58.centralus.azurecontainerapps.io"
       MEDIAPATH: "https://testpayloadcms.blob.core.windows.net/testblob/"
     steps:
