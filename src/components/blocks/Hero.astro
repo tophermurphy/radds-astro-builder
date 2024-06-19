@@ -2,6 +2,7 @@
 import type { LexicalEditor } from "./parts/PLexical/types";
 import type { BlockHero } from "@src/types/payload-types";
 
+import { Image as AImage } from "astro:assets";
 import PLexical from "./parts/PLexical/index.astro";
 
 interface Props {
@@ -55,7 +56,7 @@ const wrapStyles = {
     )
   }
   <div class="hero-gradient"></div>
-  <img class="hero-bg-image" {...imageProps} />
+  <AImage class="hero-bg-image" {...imageProps} inferSize />
 </div>
 
 <style lang="scss">

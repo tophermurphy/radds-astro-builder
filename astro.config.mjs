@@ -8,7 +8,8 @@ export default defineConfig({
   output: "static",
   site: process.env.SITE_URL,
   image: {
-    domains: [ process.env.SITE_URL ]
+    domains: [ "https://testpayloadcms.blob.core.windows.net" ],
+    remotePatterns: [{ protocol: "https" }],
   },
   vite: {
     plugins: [payloadColorsSCSS()],
