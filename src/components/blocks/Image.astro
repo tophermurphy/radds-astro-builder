@@ -1,5 +1,6 @@
 ---
 import type { BlockImage } from "src/types/payload-types";
+import { Image as AImage }  from 'astro:assets';
 
 interface Props {
   content: BlockImage;
@@ -31,7 +32,7 @@ const prefix = import.meta.env.MEDIAPATH || '/media/';
 >
   {
     image && typeof image !== "string" && (
-      <img
+      <AImage
       class:list={{'__fill-block': fill}}
         src={prefix + image.filename}
         alt={image.alt || ""}

@@ -7,6 +7,9 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   output: "static",
   site: process.env.SITE_URL,
+  image: {
+    domains: [ process.env.SITE_URL ]
+  },
   vite: {
     plugins: [payloadColorsSCSS()],
     css: {
