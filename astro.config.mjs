@@ -3,11 +3,15 @@ import payloadColorsSCSS from './plugins/vite-plugin-payload-scss-colors';
 import purgecss from "astro-purgecss";
 
 import sitemap from "@astrojs/sitemap";
+import dotenv from 'dotenv'
 
-// https://astro.build/config
+dotenv.config({ path:  `./.env.${process.env.NODE_ENV}`});
+
+console.log('nodeenv', process.env)
+
 export default defineConfig({
   output: "static",
-  site: import.meta.env.SITE_URL,
+  site: process.env.SITE_URL,
   integrations:[sitemap()],
   vite: {
     plugins: [payloadColorsSCSS()],
