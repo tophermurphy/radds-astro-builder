@@ -1,0 +1,3 @@
+MEDIAPATH=https://testpayloadcms.blob.core.windows.net/testblob/
+SITE_URL=https://victorious-hill-06e619110.5.azurestaticapps.net
+PAYLOAD_URL=https://p80payload-test-ca.icyground-d68f8c58.centralus.azurecontainerapps.io
