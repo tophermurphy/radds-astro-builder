@@ -2,14 +2,14 @@ import { defineConfig } from 'astro/config';
 import payloadColorsSCSS from './plugins/vite-plugin-payload-scss-colors';
 import purgecss from "astro-purgecss";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  site: "https://radds-astro.pages.dev",
+  site: process.env.SITE_URL,
   vite: {
-    plugins: [
-      payloadColorsSCSS()
-    ],
+    plugins: [payloadColorsSCSS()],
     css: {
       preprocessorOptions: {
         scss: {
@@ -27,29 +27,5 @@ export default defineConfig({
       }
     }
   },
-  integrations: [purgecss()]
+  integrations: [purgecss(), sitemap()]
 });
-
-//? May or may not need these
-
-// @import "@bootstrap/scss/root";
-// @import "@bootstrap/scss/utilities";
-// @import "@bootstrap/scss/reboot";
-// @import "@bootstrap/scss/type";
-// @import "@bootstrap/scss/images";
-// @import "@bootstrap/scss/containers";
-// @import "@bootstrap/scss/grid";
-// @import "@bootstrap/scss/helpers";
-// @import "@bootstrap/scss/utilities/api";
-
-// @import "src/styles/_custom_variables.scss";
-// @import "src/styles/_custom_maps.scss";
-
-// @import "node_modules/bootstrap/scss/_functions.scss";
-// @import "node_modules/bootstrap/scss/_variables.scss"; 
-// @import "node_modules/bootstrap/scss/_variables-dark.scss";             
-// @immport "src/styles/_custom_variables.scss";
-
-// @import "node_modules/bootstrap/scss/_maps.scss";
-// @import "node_modules/bootstrap/scss/_mixins.scss";          
-// @import "node_modules/bootstrap/scss/_maps.scss";

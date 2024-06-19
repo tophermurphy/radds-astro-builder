@@ -14,7 +14,6 @@ interface Props {
 
 const { title, default_header = false } = Astro.props;
 const siteData = await getPayloadSiteOptions();
-console.log('dHead', default_header);
 ---
 
 <!doctype html>
@@ -24,6 +23,7 @@ console.log('dHead', default_header);
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
