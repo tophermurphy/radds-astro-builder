@@ -7,7 +7,7 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   output: "static",
-  site: process.env.SITE_URL,
+  site: import.meta.env.SITE_URL,
   integrations:[sitemap()],
   vite: {
     plugins: [payloadColorsSCSS()],
