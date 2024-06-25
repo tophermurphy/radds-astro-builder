@@ -1,6 +1,6 @@
 ---
 import type { BlockImage } from "src/types/payload-types";
-import { Image as AImage, getImage }  from 'astro:assets';
+import { Image as AImage }  from 'astro:assets';
 
 
 interface Props {
@@ -20,11 +20,6 @@ const alignMap = {
 };
 
 const prefix = import.meta.env.MEDIAPATH || '/media/';
-
-const filename = typeof image !== 'string' ? image.filename : "";
-
-const optImage = await getImage( {src: prefix + filename, format: "webp", inferSize: true}); 
-console.log('oimage', optImage);
 ---
 
 <div

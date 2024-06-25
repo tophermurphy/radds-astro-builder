@@ -21,18 +21,23 @@ export async function getStaticPaths() {
 }
 const { slug } = Astro.params;
 const pageData = await getPageBySlug(slug);
-const { title, default_header = false, layout = "default" } = pageData;
+
+const { title, default_header = false, layout = "default", description, meta_image } = pageData;
+const pageMeta = {
+  description: description || "",
+  meta_image: meta_image && typeof meta_image !== 'string' ? meta_image?.filename ?? "" : ""
+}
 ---
 
 {
   layout === "default" ? (
-    <Layout title={title} default_header>
+    <Layout title={title} default_header={default_header} metadata={pageMeta} >
       <main>
         <SectionRouter sections={pageData.sections} />
       </main>
     </Layout>
   ) : (
-    <BlankLayout title={title} default_header>
+    <BlankLayout title={title} default_header={default_header} metadata={pageMeta} >
       <main>
         <SectionRouter sections={pageData.sections} />
       </main>

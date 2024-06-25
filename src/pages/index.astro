@@ -5,19 +5,28 @@ import BlankLayout from "../layouts/Blank.astro";
 import SectionRouter from "src/components/SectionRouter.astro";
 import { getPageBySlug } from "../lib/payloadAPI";
 
-const pageData = await getPageBySlug('home');
-const { default_header = false, layout = "default", title = "" } = pageData;
+interface Props {
+	default_header: boolean,
+	layout: string,
+	title: string,
+	metadata?: {
+		description?: string,
+		meta_image?: string
+	}
+}
 
+const pageData = await getPageBySlug('home');
+const { default_header = false, layout = "default", title = "", metadata }: Props = pageData;
 ---
 {
 	layout === "default" ? (
-	  <Layout title={title} default_header={default_header} >
+	  <Layout default_header={default_header} >
 		<main>
 		  <SectionRouter sections={pageData.sections} />
 		</main>
 	  </Layout>
 	) : (
-	  <BlankLayout title={title} default_header={default_header}>
+	  <BlankLayout default_header={default_header}>
 		<main>
 		  <SectionRouter sections={pageData.sections} />
 		</main>
