@@ -8,7 +8,7 @@ export default defineConfig({
   output: "static",
   site: process.env.SITE_URL,
   image: {
-    domains: [ "https://testpayloadcms.blob.core.windows.net" ],
+    domains: [ process.env.MEDIAPATH ],
     remotePatterns: [{ protocol: "https" }],
   },
   vite: {
