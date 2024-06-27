@@ -3,10 +3,9 @@ interface Props {
   ga_id: string;
 }
 const { ga_id } = Astro.props;
-console.log('gaID', ga_id)
 ---
 <>
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics Google tag (gtag.js) -->
 <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ ga_id }`}></script>
 <script is:inline >
   window.dataLayer = window.dataLayer || [];
