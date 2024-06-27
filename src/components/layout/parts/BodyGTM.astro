@@ -4,7 +4,6 @@ interface Props {
 }
 
 const { gtm_id } = Astro.props;
-console.log('gtm here', gtm_id);
 ---
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${ gtm_id }`}
