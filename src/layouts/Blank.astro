@@ -2,6 +2,7 @@
 import { getPayloadSiteOptions } from 'src/lib/payloadAPI';
 import DefaultHeader from '@components/layout/parts/DefaultHeader.astro';
 import HeaderMeta from '@components/layout/HeaderMeta.astro';
+import HeaderGTM from "@components/layout/HeaderGTM.astro";
 import '@fontsource/material-icons';
 
 interface Props {
@@ -20,12 +21,14 @@ const siteData = await getPayloadSiteOptions();
 const pageTitle = title || (siteData?.data?.title ?? "");
 const pageDescription = metadata?.description || (siteData?.data?.description ?? "");
 const pageMetaImage = metadata?.meta_image || (typeof siteData?.data?.meta_image !== 'string' ? siteData?.data?.meta_image?.filename ?? "" : "");
-
+const ga_id = siteData?.data?.ga_id ?? "";
+console.log('siteData', siteData);
 ---
 
 <!doctype html>
 <html lang="en">
 	<HeaderMeta title={pageTitle} description={pageDescription} meta_image={pageMetaImage}/>
+	{ ga_id && <HeaderGTM ga_id={ga_id} /> }
 	<body>
         { default_header && <DefaultHeader title={title} /> }
 		<slot />

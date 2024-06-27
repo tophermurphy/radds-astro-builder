@@ -4,6 +4,7 @@ import MainNav from "src/components/layout/MainNav.astro";
 import MainFooter from '@components/layout/MainFooter.astro';
 import DefaultHeader from '@components/layout/parts/DefaultHeader.astro';
 import HeaderMeta from '@components/layout/HeaderMeta.astro';
+import HeaderGTM from '@components/layout/HeaderGTM.astro';
 import '@fontsource/material-icons';
 
 interface Props {
@@ -22,11 +23,15 @@ const siteData = await getPayloadSiteOptions();
 const pageTitle = title || (siteData?.data?.title ?? "");
 const pageDescription = metadata?.description || (siteData?.data?.description ?? "");
 const pageMetaImage = metadata?.meta_image || (typeof siteData?.data?.meta_image !== 'string' ? siteData?.data?.meta_image?.filename ?? "" : "");
+const ga_id = siteData?.data?.ga_id ?? "";
+console.log('siteData', ga_id)
 ---
 
 <!doctype html>
 <html lang="en">
 	<HeaderMeta title={pageTitle} description={pageDescription} meta_image={pageMetaImage}/>
+	
+	{ ga_id && <HeaderGTM ga_id={ga_id} /> }
 	<body>
 		<MainNav header={siteData.header} />
 		{default_header && <DefaultHeader title={title} />}
