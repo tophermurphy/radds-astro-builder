@@ -34,6 +34,7 @@ const prefix = import.meta.env.MEDIAPATH || '/media/';
   {
     image && typeof image !== "string" && (
       <AImage
+      loading="eager"
       class:list={{'__fill-block': fill}}
         src={prefix + image.filename}
         alt={image.alt || ""}

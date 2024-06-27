@@ -1,28 +1,76 @@
 ---
-import type { Media } from '@src/types/payload-types'
+import type { Media } from "@src/types/payload-types";
 import type { LinksSocial } from "@src/types/payload-types";
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
+import Image from "astro/components/Image.astro";
+
+//TODO: Styling
 
 interface Props {
-    social_links: LinksSocial
+  social_links: LinksSocial;
 }
 
 const { social_links } = Astro.props;
+
+const prefix = import.meta.env.MEDIAPATH || "/media/";
 ---
+
 <div class="footer-social-links col-auto">
-    { social_links && social_links.length &&
-        social_links.map(
-            (item) => {
-                if( item.social_icon === "custom-icon" ){
-                    return (<a class="footer-social-link --custom" target="_blank" href={item.social_link}>{item.social_icon}</a>)
-                } else {
-                    return (
-                        <a class="footer-social-link --icon" target="_blank" style="text-decoration: none;" href={item.social_link}>
-                            <Icon name={item.social_icon} color="white" width={30} height={30} />
-                        </a>
-                    )
-                }
-            }
-        )
+  <ul>
+    {
+      social_links &&
+        social_links.length &&
+        social_links.map((item) => {
+          if (
+            item.social_icon === "custom-icon" &&
+            item.custom_icon &&
+            typeof item.custom_icon !== "string"
+          ) {
+            return (
+              <li class="footer-social-link --custom">
+                <a target="_blank" href={item.social_link}>
+                  <Image
+                    alt={item.custom_icon.alt || ""}
+                    src={prefix + item.custom_icon.filename}
+                    width={30}
+                    height={30}
+                  />
+                </a>
+              </li>
+            );
+          } else {
+            return (
+              <li class="footer-social-link --icon">
+                {" "}
+                <a target="_blank" href={item.social_link}>
+                  <Icon
+                    name={item.social_icon}
+                    color="white"
+                    width={30}
+                    height={30}
+                  />
+                </a>
+              </li>
+            );
+          }
+        })
     }
+  </ul>
 </div>
+
+<style lang="scss">
+    .footer-social-links {
+        margin-left: auto;
+        > ul  {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+  .footer-social-link {
+    margin: 0 4px 0;
+    list-style: none;
+    > a {
+        text-decoration: none;
+    }
+  }
+</style>
