@@ -17,19 +17,49 @@ export type ListPart =
       id?: string | null;
     }[]
   | null;
+export type LinksSocial =
+  | {
+      social_icon:
+        | 'behance'
+        | 'dribble'
+        | 'facebook'
+        | 'github'
+        | 'instagram'
+        | 'linkedin'
+        | 'mastodon'
+        | 'medium'
+        | 'pinterest'
+        | 'reddit'
+        | 'spotify'
+        | 'threads'
+        | 'tiktok'
+        | 'twitch'
+        | 'twitter'
+        | 'twitter-x'
+        | 'vimeo'
+        | 'yelp'
+        | 'youtube'
+        | 'custom-icon';
+      social_link: string;
+      custom_icon?: string | Media | null;
+      id?: string | null;
+    }[]
+  | null;
 
 export interface Config {
   collections: {
     pages: Page;
     media: Media;
     theme_colors: ThemeColor;
-    users: User;
     menus: Menu;
+    users: User;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   globals: {
     siteOptions: SiteOption;
+    themeOptions: ThemeOption;
+    ThemeOpts2: ThemeOpts2;
   };
 }
 export interface Page {
@@ -37,6 +67,10 @@ export interface Page {
   title?: string | null;
   sections?: (SectionSection | SectionRow | SectionColumns | SectionCarousel)[] | null;
   slug?: string | null;
+  default_header?: boolean | null;
+  layout?: ('default' | 'blank') | null;
+  description?: string | null;
+  meta_image?: string | Media | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -309,19 +343,6 @@ export interface CarouselOptions {
   mobile_height: number;
   mobile_controls: 'arrows' | 'indicators' | 'arrows_indicators';
 }
-export interface User {
-  id: string;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password: string | null;
-}
 export interface Menu {
   id: string;
   name: string;
@@ -342,6 +363,19 @@ export interface Menu {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+export interface User {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password: string | null;
 }
 export interface PayloadPreference {
   id: string;
@@ -372,12 +406,10 @@ export interface PayloadMigration {
 export interface SiteOption {
   id: string;
   data: {
-    org_name: string;
     title: string;
     description: string;
     favicon?: string | Media | null;
     meta_image?: string | Media | null;
-    host_name?: string | null;
     ga_id?: string | null;
     gtm_id?: string | null;
   };
@@ -401,6 +433,32 @@ export interface SiteOption {
     address_state?: string | null;
     zip_code?: string | null;
   };
+  social?: {
+    social_links?: LinksSocial;
+  };
+  github_creds?: {
+    github_action_url?: string | null;
+    github_token?: string | null;
+    github_branch?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+export interface ThemeOption {
+  id: string;
+  theme_option?:
+    | {
+        optionsSelectField?: string | null;
+        ValueTextField?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+export interface ThemeOpts2 {
+  id: string;
+  ContentEditField?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }

@@ -1,0 +1,28 @@
+---
+import type { Media } from '@src/types/payload-types'
+import type { LinksSocial } from "@src/types/payload-types";
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+    social_links: LinksSocial
+}
+
+const { social_links } = Astro.props;
+---
+<div class="footer-social-links col-auto">
+    { social_links && social_links.length &&
+        social_links.map(
+            (item) => {
+                if( item.social_icon === "custom-icon" ){
+                    return (<a class="footer-social-link --custom" target="_blank" href={item.social_link}>{item.social_icon}</a>)
+                } else {
+                    return (
+                        <a class="footer-social-link --icon" target="_blank" style="text-decoration: none;" href={item.social_link}>
+                            <Icon name={item.social_icon} color="white" width={30} height={30} />
+                        </a>
+                    )
+                }
+            }
+        )
+    }
+</div>

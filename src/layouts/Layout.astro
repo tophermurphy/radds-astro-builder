@@ -26,6 +26,7 @@ const pageDescription = metadata?.description || (siteData?.data?.description ??
 const pageMetaImage = metadata?.meta_image || (typeof siteData?.data?.meta_image !== 'string' ? siteData?.data?.meta_image?.filename ?? "" : "");
 const ga_id = siteData?.data?.ga_id ?? "";
 const gtm_id = siteData?.data?.gtm_id ?? "";
+const social_links = siteData?.social?.social_links && siteData?.social?.social_links.length ? siteData.social.social_links : null
 ---
 
 <!doctype html>
@@ -38,7 +39,7 @@ const gtm_id = siteData?.data?.gtm_id ?? "";
 		<MainNav header={siteData.header} />
 		{default_header && <DefaultHeader title={title} />}
 		<slot />
-		<MainFooter footer={siteData.footer} />
+		<MainFooter footer={siteData.footer} social_links={social_links} />
 	</body>
 </html>
 

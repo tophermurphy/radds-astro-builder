@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import payloadColorsSCSS from './plugins/vite-plugin-payload-scss-colors';
 import purgecss from "astro-purgecss";
-
+import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
@@ -30,5 +30,9 @@ export default defineConfig({
       }
     }
   },
-  integrations: [purgecss(), sitemap()]
+  integrations: [purgecss(), sitemap(), 
+    icon({
+      iconDir: "node_modules/bootstrap-icons/icons"
+    })
+  ]
 });
