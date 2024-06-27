@@ -7,11 +7,10 @@ const { ga_id } = Astro.props;
 <>
 <!-- Google Analytics Google tag (gtag.js) -->
 <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ ga_id }`}></script>
-<script is:inline >
+<script is:inline define:vars={{ga_id}}>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', {ga_id});
+  gtag('config', ga_id);
 </script>
 </>
