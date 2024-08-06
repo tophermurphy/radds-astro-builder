@@ -12,7 +12,13 @@ interface Props {
 }
 
 const {
-  footer: { logo, copywrite_year, colophon, footer_nav },
+  footer: {
+    logo,
+    copywrite_year,
+    colophon,
+    footer_nav,
+    include_social_links = true,
+  },
   social_links,
 } = Astro.props;
 
@@ -23,6 +29,8 @@ type SubLink = {
   label?: string | null;
   id?: string | null;
 };
+
+console.log("footer", include_social_links);
 ---
 
 <footer class="site-footer">
@@ -32,7 +40,7 @@ type SubLink = {
         <div class="footer-container container-fluid site-max">
           <div class="row footer-nav">
             {logo && typeof logo !== "string" && (
-              <div class="footer-logo col-auto">
+              <div class="footer-logo col-md-auto">
                 <a href="/">
                   <img
                     src={logo.url || ""}
@@ -44,8 +52,16 @@ type SubLink = {
             )}
             {footer_nav &&
               typeof footer_nav !== "string" &&
-              footer_nav?.nav?.length && <FooterNav nav={footer_nav.nav} />}
-            {social_links && <SocialLinks social_links={social_links} />}
+              footer_nav?.nav?.length && (
+                <div class="col-md-auto">
+                  <FooterNav nav={footer_nav.nav} />
+                </div>
+              )}
+            {social_links && include_social_links && (
+              <div class="col-md-auto">
+                <SocialLinks social_links={social_links} />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -73,5 +89,16 @@ type SubLink = {
   .footer-logo img {
     width: 200px;
     max-width: 100%;
+  }
+  .colophon {
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+  }
+  .footer-nav {
+    --#{$prefix}gutter-y: 1rem;
+
+    > .col-md-auto:last-of-type {
+      margin-left: auto;
+    }
   }
 </style>

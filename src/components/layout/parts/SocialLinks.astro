@@ -14,9 +14,7 @@ const { social_links } = Astro.props;
 
 const prefix = import.meta.env.MEDIAPATH || "/media/";
 ---
-
-<div class="footer-social-links col-auto">
-  <ul>
+  <ul class="row footer-social-links">
     {
       social_links &&
         social_links.length &&
@@ -27,7 +25,7 @@ const prefix = import.meta.env.MEDIAPATH || "/media/";
             typeof item.custom_icon !== "string"
           ) {
             return (
-              <li class="footer-social-link --custom">
+              <li class="col-auto footer-social-link --custom">
                 <a target="_blank" href={item.social_link}>
                   <Image
                     alt={item.custom_icon.alt || ""}
@@ -40,7 +38,7 @@ const prefix = import.meta.env.MEDIAPATH || "/media/";
             );
           } else {
             return (
-              <li class="footer-social-link --icon">
+              <li class="col-auto footer-social-link --icon">
                 {" "}
                 <a target="_blank" href={item.social_link}>
                   <Icon
@@ -56,18 +54,12 @@ const prefix = import.meta.env.MEDIAPATH || "/media/";
         })
     }
   </ul>
-</div>
 
 <style lang="scss">
-    .footer-social-links {
-        margin-left: auto;
-        > ul  {
-            display: flex;
-            flex-wrap: wrap;
-        }
-    }
+ul.footer-social-links {
+  padding-left: 0;
+}
   .footer-social-link {
-    margin: 0 4px 0;
     list-style: none;
     > a {
         text-decoration: none;

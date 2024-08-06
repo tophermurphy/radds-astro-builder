@@ -419,9 +419,10 @@ export interface SiteOption {
   };
   footer?: {
     logo?: string | Media | null;
-    copywrite_year?: string | null;
-    colophon?: string | null;
     footer_nav?: (string | null) | Menu;
+    include_social_links?: boolean | null;
+    colophon?: string | null;
+    copywrite_year?: string | null;
   };
   contact?: {
     name?: string | null;
