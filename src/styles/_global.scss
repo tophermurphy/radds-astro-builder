@@ -1,3 +1,5 @@
+@use "sass:map";
+@use "sass:math";
 // @import "./custom_variables";
 @import "./variables.scss";
 
@@ -5,21 +7,56 @@
 //May need to be overridden in some.
 
 .section > .block:last-of-type :last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .material-symbols-outlined {
-    font-family: 'Material Icons', sans-serif;  }
-
+  font-family: "Material Icons", sans-serif;
+}
 
 .site-max {
-    max-width: $site-max-width;
+  max-width: $site-max-width;
 }
 
 .default-header {
-    //Match navbar max-width and padding
-    max-width: $site-max-width;
-    padding-left: $nav-link-padding-x; 
-    padding-right: $nav-link-padding-x; 
-    margin: 0 auto;
+  //Match navbar max-width and padding
+  max-width: $site-max-width;
+  padding-left: $nav-link-padding-x;
+  padding-right: $nav-link-padding-x;
+  margin: 0 auto;
+}
+
+// Containers
+$narrow-max-width: map.get($container-max-widths, "md");
+$narrow-percent: 0.8;
+
+.container-narrow {
+  @include make-container();
+  @include media-breakpoint-down('sm'){
+    width: clamp(420px, 100% * $narrow-percent, 100%);
+  }
+}
+
+$extend-max-width: true;
+
+@each $breakpoint, $container-max-width in $container-max-widths {
+    $new-max-width: 0;
+  @if ($extend-max-width) {
+
+    @if ($narrow-max-width < $container-max-width * $narrow-percent) {
+      $new-max-width: $narrow-max-width;
+      $extend-max-width: false;
+    } @else {
+      $new-max-width: $container-max-width * $narrow-percent;
+    }
+    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+      %new-container-#{$breakpoint} {
+        max-width: $new-max-width;
+      }
+    }
+
+    .container-narrow {
+      @extend %new-container-#{$breakpoint};
+    }
+  }
 }
