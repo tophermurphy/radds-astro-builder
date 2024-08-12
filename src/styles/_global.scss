@@ -27,12 +27,18 @@
 }
 
 // Containers
+.section-container {
+  .container-fluid {
+    max-width: $site-max-width;
+  }
+}
+
 $narrow-max-width: map.get($container-max-widths, "md");
 $narrow-percent: 0.8;
 
 .container-narrow {
   @include make-container();
-  @include media-breakpoint-down('sm'){
+  @include media-breakpoint-down("sm") {
     width: clamp(420px, 100% * $narrow-percent, 100%);
   }
 }
@@ -40,9 +46,8 @@ $narrow-percent: 0.8;
 $extend-max-width: true;
 
 @each $breakpoint, $container-max-width in $container-max-widths {
-    $new-max-width: 0;
+  $new-max-width: 0;
   @if ($extend-max-width) {
-
     @if ($narrow-max-width < $container-max-width * $narrow-percent) {
       $new-max-width: $narrow-max-width;
       $extend-max-width: false;

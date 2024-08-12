@@ -20,8 +20,8 @@ const defaultBg = 'bg-none'
 const bg = typeof bg_color !== "string" ?`text-bg-${bg_color?.name}` || "defaultBg" : defaultBg; 
 
 ---
-<div class:list={['s-container', '__outer', bg]}>
-    <div class:list={['s-container', 'inner', width, pClass]}>
+<div class:list={['section-container', '__outer', bg]}>
+    <div class:list={['__inner', width, pClass]}>
         <slot />
     </div>
 </div>

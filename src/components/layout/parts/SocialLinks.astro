@@ -43,7 +43,6 @@ const prefix = import.meta.env.MEDIAPATH || "/media/";
                 <a target="_blank" href={item.social_link}>
                   <Icon
                     name={item.social_icon}
-                    color="white"
                     width={30}
                     height={30}
                   />
@@ -63,6 +62,7 @@ ul.footer-social-links {
     list-style: none;
     > a {
         text-decoration: none;
+        color: inherit;
     }
   }
 </style>

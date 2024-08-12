@@ -18,6 +18,7 @@ const {
     colophon,
     footer_nav,
     include_social_links = true,
+    background_color
   },
   social_links,
 } = Astro.props;
@@ -30,13 +31,16 @@ type SubLink = {
   id?: string | null;
 };
 
-console.log("footer", include_social_links);
+console.log('background color', background_color);
+
+const bgColor = background_color && typeof background_color !== 'string' ? `text-bg-${background_color.name}` : '';
+
 ---
 
 <footer class="site-footer">
   {
     (logo || footer_nav || social_links) && (
-      <div class="footer-bg">
+      <div class:list={['footer-bg', bgColor]} >
         <div class="footer-container container-fluid site-max">
           <div class="row footer-nav">
             {logo && typeof logo !== "string" && (
@@ -83,7 +87,6 @@ console.log("footer", include_social_links);
 
 <style lang="scss">
   .footer-bg {
-    background: #000;
     padding: 2rem 0;
   }
   .footer-logo img {

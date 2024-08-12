@@ -266,7 +266,7 @@ export interface BlockHero {
   blockType: 'hero';
 }
 export interface SectionOptions {
-  width?: ('container' | 'container-sm' | 'container-full' | 'container-bleed') | null;
+  width?: ('container' | 'container-narrow' | 'container-fluid' | 'container-bleed') | null;
   padding?: ('top_bottom' | 'top' | 'bottom' | 'none') | null;
   bg_color?: (string | null) | ThemeColor;
   variant?: string | null;
@@ -423,6 +423,7 @@ export interface SiteOption {
     include_social_links?: boolean | null;
     colophon?: string | null;
     copywrite_year?: string | null;
+    background_color?: (string | null) | ThemeColor;
   };
   contact?: {
     name?: string | null;
