@@ -1,9 +1,10 @@
 ---
-import type { LexicalEditor } from "./parts/PLexical/types";
 import type { BlockHero } from "@src/types/payload-types";
-
 import { Image as AImage } from "astro:assets";
 import PLexical from "./parts/PLexical/index.astro";
+
+//TODO: Image background shows when slides are not equal height
+//TODO: Section Options - padding implement
 
 interface Props {
   content: BlockHero;
@@ -12,10 +13,14 @@ const {
   content: {
     image,
     textEditor,
-    min_height = 400,
+    min_height = 800,
+    min_height_mobile = 400,
     text_width = 30,
     text_location = "center_left",
     image_opacity = 100,
+    gradient_direction = "right",
+    gradient_opacity = 80,
+    gradient_width = 100,
   },
 } = Astro.props;
 
@@ -37,20 +42,18 @@ const imageProps = {
   },
 };
 
-
 const [align, justify] = (text_location || "center_left").split("_");
 
 const wrapStyles = {
-  minHeight: `${min_height}px`,
   alignItems: alignMap[align as keyof typeof alignMap],
   justifyContent: alignMap[justify as keyof typeof alignMap],
 };
 ---
 
-<div class="hero-wrap" style={wrapStyles}>
+<div class="hero-wrap">
   {
     textEditor && (
-      <div class="hero-text" style={{ width: `${text_width}%`}}>
+      <div class="hero-text" style={{ width: `${text_width}%` }}>
         <PLexical textEditor={textEditor as any} />
       </div>
     )
@@ -59,14 +62,33 @@ const wrapStyles = {
   <AImage class="hero-bg-image" {...imageProps} inferSize />
 </div>
 
-<style lang="scss">
+<style
+  lang="scss"
+  define:vars={{
+    min_height: `${min_height}px`,
+    min_height_mobile: `${min_height_mobile}px`,
+    align_hero: wrapStyles.alignItems,
+    justify_hero: wrapStyles.justifyContent,
+    gradient_direction,
+    gradient_opacity: `${(gradient_opacity || 80) * 0.01}`,
+    gradient_width: `${gradient_width}%`,
+  }}
+>
+
+
+  $hero-padding-x: 2rem;
+  $hero-padding-y: 2rem;
+
   .hero-wrap {
+    min-height: var(--min_height);
+    align-items: var(--align_hero);
+    justify-content: var(--justify-hero);
     position: relative;
     width: 100%;
     height: 100%;
     z-index: 0;
     display: flex;
-    padding: 2em;
+    padding: $hero-padding-x $hero-padding-y;
     color: $white;
     .hero-bg-image {
       position: absolute;
@@ -78,6 +100,9 @@ const wrapStyles = {
       object-position: center;
       z-index: -1;
     }
+    @include media-breakpoint-down("md") {
+      min-height: var(--min_height_mobile);
+    }
   }
   .hero-text {
     z-index: 10;
@@ -86,14 +111,14 @@ const wrapStyles = {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: .6;
+    opacity: var(--gradient_opacity);
     top: 0;
     left: 0;
     z-index: 2;
     background-image: linear-gradient(
-      to right,
+      to var(--gradient_direction),
       rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 0)
+      rgba(0, 0, 0, 0) var(--gradient_width)
     );
   }
 </style>

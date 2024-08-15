@@ -245,6 +245,7 @@ export interface BlockHero {
       }[]
     | null;
   min_height: number;
+  min_height_mobile: number;
   text_width: number;
   text_location:
     | 'top_left'
@@ -258,7 +259,7 @@ export interface BlockHero {
     | 'bottom_right';
   image_opacity: number;
   add_gradient?: boolean | null;
-  gradient_direction?: ('left_right' | 'right_left') | null;
+  gradient_direction?: ('right' | 'left') | null;
   gradient_opacity?: number | null;
   gradient_width?: number | null;
   id?: string | null;
@@ -273,8 +274,7 @@ export interface SectionOptions {
   anchor?: string | null;
 }
 export interface SectionRow {
-  columns?: ('1' | '2') | null;
-  layout?: ('6_6' | '5_7' | '7_5' | '4_8' | '8_4' | '3_9' | '9_3') | null;
+  layout: '6_6' | '5_7' | '7_5' | '4_8' | '8_4' | '3_9' | '9_3';
   col_1_blocks?:
     | (
         | BlockHeading
@@ -338,9 +338,7 @@ export interface SectionCarousel {
   blockType: 'carousel';
 }
 export interface CarouselOptions {
-  height: number;
   controls: 'arrows' | 'indicators' | 'arrows_indicators';
-  mobile_height: number;
   mobile_controls: 'arrows' | 'indicators' | 'arrows_indicators';
 }
 export interface Menu {

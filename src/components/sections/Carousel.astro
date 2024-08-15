@@ -10,6 +10,9 @@ import { generateUUID } from "@src/lib/utilities";
 import ChevronLeft from "@src/icons/chevron_left.svg?raw";
 import ChevronRight from "@src/icons/chevron_right.svg?raw";
 
+// TODO: Rethink Section Options for carousel;
+// ? No padding external
+
 interface Props {
   section: SectionCarousel;
 }
@@ -26,11 +29,22 @@ const indicators = {
   desktop: controls.includes("indicators"),
   mobile: mobile_controls.includes("indicators"),
 };
-
 ---
 
 <section class="section __carousel">
-  <div id={carouselID} class="carousel slide">
+  <div
+    id={carouselID}
+    class:list={[
+      "carousel",
+      "slide",
+      { "__arrows-all": arrows.desktop && arrows.mobile },
+      { "__arrows-desktop": arrows.desktop && !arrows.mobile },
+      { "__arrows-mobile": arrows.mobile && !arrows.desktop },
+      { "__indicators-all": indicators.desktop && indicators.mobile },
+      { "__indicators-desktop": indicators.desktop && !indicators.mobile },
+      { "__indicators-mobile": indicators.mobile && !indicators.desktop },
+    ]}
+  >
     {
       blocksLength && (indicators.desktop || indicators.mobile) && (
         <div
@@ -107,24 +121,43 @@ const indicators = {
   </div>
 </section>
 
-<style lang="scss" scoped>
+<style lang="scss" is:global>
+  $arrow-size: 32px;
+  $control-width: $arrow-size * 1.5;
+  $padding-width-arrows: $arrow-size * 1.75;
+
+  .carousel {
+    &.__arrows-all .hero-wrap {
+      padding-left: $padding-width-arrows;
+      padding-right: $padding-width-arrows;
+    }
+    &.__arrows-desktop .hero-wrap {
+      @include media-breakpoint-up("md") {
+        padding-left: $padding-width-arrows;
+        padding-right: $padding-width-arrows;
+      }
+    }
+    &.__arrows-mobile .hero-wrap {
+      @include media-breakpoint-down("md") {
+        padding-left: $padding-width-arrows;
+        padding-right: $padding-width-arrows;
+      }
+    }
+  }
+
   .carousel-control-prev,
   .carousel-control-next {
-    width: 48px;
+    width: $control-width;
   }
   .carousel-arrow {
     fill: #000;
-    width: 32px;
-    height: 32px;
+    width: $arrow-size;
+    height: $arrow-size;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
-    svg {
-      width: 80px;
-      height: 80px;
-    }
   }
 </style>
 
