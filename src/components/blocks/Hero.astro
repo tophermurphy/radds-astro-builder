@@ -50,7 +50,7 @@ const wrapStyles = {
 <div class="hero-wrap" style={wrapStyles}>
   {
     textEditor && (
-      <div class="hero-text">
+      <div class="hero-text" style={{ width: `${text_width}%`}}>
         <PLexical textEditor={textEditor as any} />
       </div>
     )

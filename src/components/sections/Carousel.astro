@@ -15,26 +15,18 @@ interface Props {
 }
 
 const { section } = Astro.props;
-
 const blocksLength = section.blocks?.length || 0;
-
 const carouselID = `carousel-${section.id || generateUUID()}`;
-
-//@TODO Show indicators according to CMS mobile desktop
-
 const { controls, mobile_controls } = section.carousel_options;
-
-
 const arrows = {
   desktop: controls.includes("arrows"),
   mobile: mobile_controls.includes("arrows"),
 };
-
 const indicators = {
   desktop: controls.includes("indicators"),
   mobile: mobile_controls.includes("indicators"),
 };
-console.log('indicators', indicators)
+
 ---
 
 <section class="section __carousel">
