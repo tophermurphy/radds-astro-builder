@@ -8,10 +8,10 @@ const {
   section: { layout = "6_6", col_1_blocks, col_2_blocks },
 } = Astro.props;
 
-const [col1, col2] = (layout || '6_6').split("_");
+const [col1, col2] = (layout || "6_6").split("_");
 ---
 
-<section class="section __row row">
+<section class="section __row row gy-4">
   <div class={`row-col col-12 col-md-${col1}`}>
     {col_1_blocks && <BlockRouter blocks={col_1_blocks} />}
   </div>
@@ -20,8 +20,19 @@ const [col1, col2] = (layout || '6_6').split("_");
   </div>
 </section>
 
-<style lang="css" is:global>
-    .row-col > .block:last-of-type :last-child {
-        margin-bottom: 0;
+<style lang="scss" is:global>
+  // TODO: Variable for gutters? 
+  // Equalize content heights
+  .row-col {
+    > .block {
+      height: 100%;
+      > div {
+        height: 100%;
+      }
     }
+   // Remove margins from the the last-child to keep padding sizes even
+    > .block :last-child {
+      margin-bottom: 0;
+    }
+  }
 </style>

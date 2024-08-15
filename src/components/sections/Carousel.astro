@@ -22,23 +22,46 @@ const carouselID = `carousel-${section.id || generateUUID()}`;
 
 //@TODO Show indicators according to CMS mobile desktop
 
-const { height, controls, mobile_height, mobile_controls } = section.carousel_options;
+const { controls, mobile_controls } = section.carousel_options;
+
+
+const arrows = {
+  desktop: controls.includes("arrows"),
+  mobile: mobile_controls.includes("arrows"),
+};
+
+const indicators = {
+  desktop: controls.includes("indicators"),
+  mobile: mobile_controls.includes("indicators"),
+};
+console.log('indicators', indicators)
 ---
 
 <section class="section __carousel">
   <div id={carouselID} class="carousel slide">
     {
-      blocksLength &&
-      (
-        <div class="carousel-indicators">
-          {
-            [...Array(blocksLength)].map((_, i) => (
-      <button type="button" class:list={{ active: i === 0}} data-bs-target={`#${carouselID}`} data-bs-slide-to={i} aria-current={!!(i === 0)} aria-label={`Slide ${i}`}></button>
-      ))
-          }
-          </div>
+      blocksLength && (indicators.desktop || indicators.mobile) && (
+        <div
+          class:list={[
+            "carousel-indicators",
+            {
+              "view-desktop-only": indicators.desktop && !indicators.mobile,
+              "view-mobile-only": indicators.mobile && !indicators.desktop,
+            },
+          ]}
+        >
+          {[...Array(blocksLength)].map((_, i) => (
+            <button
+              type="button"
+              class:list={{ active: i === 0 }}
+              data-bs-target={`#${carouselID}`}
+              data-bs-slide-to={i}
+              aria-current={!!(i === 0)}
+              aria-label={`Slide ${i}`}
+            />
+          ))}
+        </div>
       )
-  
     }
     <div class="carousel-inner">
       {
@@ -53,28 +76,42 @@ const { height, controls, mobile_height, mobile_controls } = section.carousel_op
           })
       }
     </div>
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target={`#${carouselID}`}
-      data-bs-slide="prev"
-    >
-      <span class="carousel-arrow">
-        <Fragment set:html={ChevronLeft} />
-      </span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target={`#${carouselID}`}
-      data-bs-slide="next"
-    >
-      <span class="carousel-arrow">
-        <Fragment set:html={ChevronRight} />
-      </span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    {
+      blocksLength && (arrows.desktop || arrows.mobile) && (
+        <div
+          class:list={[
+            "carousel-arrows",
+            {
+              "view-desktop-only": arrows.desktop && !arrows.mobile,
+              "view-mobile-only": arrows.mobile && !arrows.desktop,
+            },
+          ]}
+        >
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target={`#${carouselID}`}
+            data-bs-slide="prev"
+          >
+            <span class="carousel-arrow">
+              <Fragment set:html={ChevronLeft} />
+            </span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target={`#${carouselID}`}
+            data-bs-slide="next"
+          >
+            <span class="carousel-arrow">
+              <Fragment set:html={ChevronRight} />
+            </span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      )
+    }
   </div>
 </section>
 

@@ -65,3 +65,16 @@ $extend-max-width: true;
     }
   }
 }
+
+// Helper views
+.view-desktop-only {
+  @include media-breakpoint-down('md'){
+    display: none!important;
+  }
+}
+
+.view-mobile-only {
+  @include media-breakpoint-up('md'){
+    display: none!important;
+  }
+}
