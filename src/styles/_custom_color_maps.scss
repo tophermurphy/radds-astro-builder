@@ -7,49 +7,6 @@ Do not update this file. */
 @import "@bootstrap/scss/maps";
 
 
-$custom-colors: (
-'balloon-knot': $balloon-knot,
-'grapeape': $grapeape,
-);
-
-$custom-subtle-colors: (
-'balloon-knot': $balloon-knot-bg-subtle,
-'grapeape': $grapeape-bg-subtle,
-);
-
-$custom-utilities-bg-subtle: (
-'balloon-knot-subtle': var(--#{$prefix}balloon-knot-bg-subtle),
-'grapeape-subtle': var(--#{$prefix}grapeape-bg-subtle),
-);
-
-$custom-text-emphasis: (
-'balloon-knot': $balloon-knot-text-emphasis, 
-'grapeape': $grapeape-text-emphasis, 
-);
-
-$custom-utitity-text-emphasis: (
-'balloon-knot-emphasis': var(--#{$prefix}balloon-knot-text-emphasis),
-'grapeape-emphasis': var(--#{$prefix}grapeape-text-emphasis),
-);
-
-$custom-border-subtle: (
-'balloon-knot': $balloon-knot-border-subtle,
-'grapeape': $grapeape-border-subtle,
-);
-
-$custom-utility-border-subtle: (
-'balloon-knot-subtle': var(--#{$prefix}balloon-knot--border-subtle),
-'grapeape-subtle': var(--#{$prefix}grapeape--border-subtle),
-);
-
-
-$theme-colors: map-merge($theme-colors, $custom-colors);
-$theme-colors-bg-subtle: map-merge($theme-colors-bg-subtle, $custom-subtle-colors);
-$utilities-bg-subtle: map-merge($utilities-bg-subtle, $custom-utilities-bg-subtle);
-$theme-colors-text: map-merge($theme-colors-text, $custom-text-emphasis);
-$utilities-text-emphasis-colors: map-merge($utilities-text-emphasis-colors, $custom-utitity-text-emphasis);
-$theme-colors-border-subtle: map-merge($theme-colors-border-subtle, $custom-border-subtle);
-$utilities-border-subtle: map-merge($utilities-border-subtle, $custom-utility-border-subtle);
 
 // Additional utility maps, hopefully this can be streamlined at some point.
 $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");

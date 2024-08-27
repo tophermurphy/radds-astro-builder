@@ -31,8 +31,6 @@ type SubLink = {
   id?: string | null;
 };
 
-console.log('background color', background_color);
-
 const bgColor = background_color && typeof background_color !== 'string' ? `text-bg-${background_color.name}` : '';
 
 ---
