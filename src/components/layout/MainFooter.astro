@@ -1,8 +1,10 @@
 ---
 import type { SiteOption, Page, LinksSocial } from "src/types/payload-types";
-import { Icon } from "astro-icon/components";
 import FooterNav from "./parts/FooterNav.astro";
 import SocialLinks from "./parts/SocialLinks.astro";
+import type { Media } from "src/types/payload-types";
+import { Image } from "astro:assets";
+
 
 interface Options extends Required<SiteOption> {}
 
@@ -24,15 +26,15 @@ const {
 } = Astro.props;
 
 const copywrite = copywrite_year || new Date().getFullYear().toString();
-
-type SubLink = {
-  page: string | Page;
-  label?: string | null;
-  id?: string | null;
-};
-
 const bgColor = background_color && typeof background_color !== 'string' ? `text-bg-${background_color.name}` : '';
-
+const prefix = import.meta.env.MEDIAPATH || '/media/';
+const { url, width, height, alt, filename = "" } = logo as Media;
+const imageProps = {
+  src: prefix + filename,
+  width: width || 200,
+  height: height || 100,
+  alt: alt || "",
+}
 ---
 
 <footer class="site-footer">
@@ -44,11 +46,7 @@ const bgColor = background_color && typeof background_color !== 'string' ? `text
             {logo && typeof logo !== "string" && (
               <div class="footer-logo col-md-auto">
                 <a href="/">
-                  <img
-                    src={logo.url || ""}
-                    alt={logo.alt || ""}
-                    class="img-fluid"
-                  />
+                  <Image {...imageProps} class="img-fluid" />
                 </a>
               </div>
             )}
