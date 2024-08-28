@@ -23,7 +23,7 @@ const prefix = import.meta.env.MEDIAPATH || '/media/';
   <div class="card-body">
     {title && <h3 class="card-title">{title}</h3>}
     {subtitle && <h4 class="card-subtitle">{subtitle}</h4>}
-    <div>
+    <div class="card-text">
       {
         textEditor && 
         <PLexical textEditor={textEditor as any} />
@@ -37,6 +37,9 @@ const prefix = import.meta.env.MEDIAPATH || '/media/';
     .section.__columns .card {
         height: 100%;
     }
+    .card-text :last-child {
+    margin-bottom: 0!important;
+  }
 </style>
 
 <style lang="css" >
@@ -46,4 +49,5 @@ const prefix = import.meta.env.MEDIAPATH || '/media/';
     object-fit: cover;
     object-position: center;
   }
+
 </style>

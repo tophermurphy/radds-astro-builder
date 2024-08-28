@@ -14,7 +14,8 @@ type pageList = {
 
 export async function getStaticPaths() {
   const pages = await getPageList();
-  return pages.data.pageList.map(({ slug, title, id }: pageList) => ({
+  console.log('pages', pages);
+  return pages.pageList.map(({ slug, title, id }: pageList) => ({
     params: { slug },
     props: { title, id },
   }));

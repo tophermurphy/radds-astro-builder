@@ -1,13 +1,15 @@
 ---
 import type { BlockImage } from "src/types/payload-types";
-import { Image as AImage }  from 'astro:assets';
+import { Image as AImage, type RemoteImageProps }  from 'astro:assets';
 
+// TODO: More values for positioning fill image
 
 interface Props {
   content: BlockImage;
 }
+
 const { content } = Astro.props;
-const { image, justify = "center", align = "center", fill } = content;
+const { image, format, size, fill } = content;
 const justifyMap = {
   left: "justify-content-start",
   center: "justify-content-center",
@@ -19,37 +21,61 @@ const alignMap = {
   center: "align-items-center",
 };
 
+const justifyClass = justifyMap[size?.justify ?? 'center'];
+const alignClass = alignMap[size?.align ?? 'center'];
+const maxHeight = format == 'fill' && fill['max-height'] ? `${fill['max-height']}px` : 'none';
+
 const prefix = import.meta.env.MEDIAPATH || '/media/';
+let imageProps: RemoteImageProps = {
+  loading: 'eager',
+  format: 'webp',
+  src: prefix + image.filename,
+  alt: image.alt || "",
+}
+
+if( format === 'size'){
+  imageProps.height = size.height || 500;
+  imageProps.width = size.width || 200;
+} else if( format === 'fill')
+{
+  imageProps.width = 800;
+  imageProps.height = image.width / image.height * 800;
+}
 ---
 
 <div
   class:list={[
+    "image-wrap",
     "d-flex",
     "w-100",
     "h-100",
-    justifyMap[justify],
-    alignMap[align],
+    { [`${justifyClass}`]: format === 'size' },
+    { [`${alignClass}`]: format === 'size' },
+    { "--size": format === 'size' },
+    { "--fill": format === 'fill' }
   ]}
 >
   {
     image && typeof image !== "string" && (
-      <AImage
-      loading="eager"
-      class:list={{'__fill-block': fill}}
-        src={prefix + image.filename}
-        alt={image.alt || ""}
-        width={image.width || 200}
-        height={image.height || 100}
-        format="webp"
-      />
+      <AImage {...imageProps}  densities={[1, 1.5, 2]} />
     )
   }
 </div>
 
-<style>
-  .__fill-block {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+<style lang="scss" define:vars={{ maxHeight, xPos: fill?.['x-pos'] ?? 'center', yPos: fill?.['y-pos'] ?? 'top'}} >
+  .image-wrap {
+   > img {
+    max-width: 100%;
+   }
+    &.--size > img {
+      object-fit: contain;
+    }
+    &.--fill > img {
+      object-fit: cover;
+      width: 100%;
+      min-height: 100%;
+      max-height: var(--maxHeight);
+      object-position: var(--xPos) var(--yPos);
+    }
   }
 </style>

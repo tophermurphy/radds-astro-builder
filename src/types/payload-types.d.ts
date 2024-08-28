@@ -6,17 +6,35 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ListPart".
+ */
 export type ListPart =
   | {
       title: string;
-      textEditor?:
-        | {
+      textEditor?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
             [k: string]: unknown;
-          }[]
-        | null;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
       id?: string | null;
     }[]
   | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinksSocial".
+ */
 export type LinksSocial =
   | {
       social_icon:
@@ -41,12 +59,15 @@ export type LinksSocial =
         | 'youtube'
         | 'custom-icon';
       social_link: string;
-      custom_icon?: string | Media | null;
+      custom_icon?: (string | null) | Media;
       id?: string | null;
     }[]
   | null;
 
 export interface Config {
+  auth: {
+    users: UserAuthOperations;
+  };
   collections: {
     pages: Page;
     media: Media;
@@ -56,12 +77,39 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
+  db: {
+    defaultIDType: string;
+  };
   globals: {
     siteOptions: SiteOption;
-    themeOptions: ThemeOption;
-    ThemeOpts2: ThemeOpts2;
+  };
+  locale: null;
+  user: User & {
+    collection: 'users';
   };
 }
+export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
 export interface Page {
   id: string;
   title?: string | null;
@@ -70,10 +118,14 @@ export interface Page {
   default_header?: boolean | null;
   layout?: ('default' | 'blank') | null;
   description?: string | null;
-  meta_image?: string | Media | null;
+  meta_image?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionSection".
+ */
 export interface SectionSection {
   blocks?:
     | (
@@ -95,6 +147,10 @@ export interface SectionSection {
   blockName?: string | null;
   blockType: 'section';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockHeading".
+ */
 export interface BlockHeading {
   size?: ('h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') | null;
   heading?: string | null;
@@ -102,12 +158,20 @@ export interface BlockHeading {
   blockName?: string | null;
   blockType: 'heading';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockParagraph".
+ */
 export interface BlockParagraph {
   paragraph?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'paragraph';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockAccordion".
+ */
 export interface BlockAccordion {
   title?: string | null;
   columns?: ('1' | '2' | '3' | '4') | null;
@@ -116,59 +180,57 @@ export interface BlockAccordion {
   blockName?: string | null;
   blockType: 'accordion';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockCard".
+ */
 export interface BlockCard {
   title?: string | null;
   subtitle?: string | null;
-  image?: string | Media | null;
-  textEditor?:
-    | {
+  image?: (string | null) | Media;
+  textEditor?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
         [k: string]: unknown;
-      }[]
-    | null;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   card_color?: (string | null) | ThemeColor;
   id?: string | null;
   blockName?: string | null;
   blockType: 'card';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
 export interface Media {
   id: string;
-  alt?: string | null;
-  title?: string | null;
+  alt: string;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
+  thumbnailURL?: string | null;
   filename?: string | null;
   mimeType?: string | null;
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    medium?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
+  focalX?: number | null;
+  focalY?: number | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_colors".
+ */
 export interface ThemeColor {
   id: string;
   name: string;
@@ -176,6 +238,10 @@ export interface ThemeColor {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockButtons".
+ */
 export interface BlockButtons {
   size?: ('sm' | 'md' | 'lg') | null;
   justify?: ('flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-evenly') | null;
@@ -187,6 +253,10 @@ export interface BlockButtons {
   blockName?: string | null;
   blockType: 'buttons';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ButtonPart".
+ */
 export interface ButtonPart {
   label: string;
   link_type?: ('page' | 'url') | null;
@@ -197,16 +267,34 @@ export interface ButtonPart {
   style?: ('primary' | 'secondary') | null;
   color?: (string | null) | ThemeColor;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockTextEditor".
+ */
 export interface BlockTextEditor {
-  textEditor?:
-    | {
+  textEditor?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
         [k: string]: unknown;
-      }[]
-    | null;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'textEditor';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockDivider".
+ */
 export interface BlockDivider {
   height: number;
   color?: (string | null) | ThemeColor;
@@ -214,6 +302,10 @@ export interface BlockDivider {
   blockName?: string | null;
   blockType: 'divider';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockImage".
+ */
 export interface BlockImage {
   justify: 'left' | 'center' | 'right';
   align: 'flex-start' | 'center' | 'flex-end';
@@ -222,7 +314,12 @@ export interface BlockImage {
   id?: string | null;
   blockName?: string | null;
   blockType: 'image';
+  height?: number;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockQuote".
+ */
 export interface BlockQuote {
   text: string;
   source?: string | null;
@@ -231,19 +328,37 @@ export interface BlockQuote {
   blockName?: string | null;
   blockType: 'quote';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockTabs".
+ */
 export interface BlockTabs {
   list?: ListPart;
   id?: string | null;
   blockName?: string | null;
   blockType: 'tabs';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockHero".
+ */
 export interface BlockHero {
   image: string | Media;
-  textEditor?:
-    | {
+  textEditor?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
         [k: string]: unknown;
-      }[]
-    | null;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   min_height: number;
   min_height_mobile: number;
   text_width: number;
@@ -266,6 +381,10 @@ export interface BlockHero {
   blockName?: string | null;
   blockType: 'hero';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionOptions".
+ */
 export interface SectionOptions {
   width?: ('container' | 'container-narrow' | 'container-fluid' | 'container-bleed') | null;
   padding?: ('top_bottom' | 'top' | 'bottom' | 'none') | null;
@@ -273,6 +392,10 @@ export interface SectionOptions {
   variant?: string | null;
   anchor?: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionRow".
+ */
 export interface SectionRow {
   layout: '6_6' | '5_7' | '7_5' | '4_8' | '8_4' | '3_9' | '9_3';
   col_1_blocks?:
@@ -306,6 +429,10 @@ export interface SectionRow {
   blockName?: string | null;
   blockType: 'row';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionColumns".
+ */
 export interface SectionColumns {
   blocks?:
     | (
@@ -325,10 +452,18 @@ export interface SectionColumns {
   blockName?: string | null;
   blockType: 'columns';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ColumnOptions".
+ */
 export interface ColumnOptions {
   columns?: ('2' | '3' | '4' | '5' | '6') | null;
   justify?: ('flex-start' | 'center' | 'flex-end' | 'stretch') | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionCarousel".
+ */
 export interface SectionCarousel {
   blocks?: (BlockImage | BlockHero)[] | null;
   carousel_options: CarouselOptions;
@@ -337,10 +472,18 @@ export interface SectionCarousel {
   blockName?: string | null;
   blockType: 'carousel';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselOptions".
+ */
 export interface CarouselOptions {
   controls: 'arrows' | 'indicators' | 'arrows_indicators';
   mobile_controls: 'arrows' | 'indicators' | 'arrows_indicators';
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menus".
+ */
 export interface Menu {
   id: string;
   name: string;
@@ -362,6 +505,10 @@ export interface Menu {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
 export interface User {
   id: string;
   updatedAt: string;
@@ -373,8 +520,12 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password: string | null;
+  password?: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences".
+ */
 export interface PayloadPreference {
   id: string;
   user: {
@@ -394,6 +545,10 @@ export interface PayloadPreference {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations".
+ */
 export interface PayloadMigration {
   id: string;
   name?: string | null;
@@ -401,22 +556,26 @@ export interface PayloadMigration {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteOptions".
+ */
 export interface SiteOption {
   id: string;
   data: {
     title: string;
     description: string;
-    favicon?: string | Media | null;
-    meta_image?: string | Media | null;
+    favicon?: (string | null) | Media;
+    meta_image?: (string | null) | Media;
     ga_id?: string | null;
     gtm_id?: string | null;
   };
   header?: {
-    logo?: string | Media | null;
+    logo?: (string | null) | Media;
     main_nav?: (string | null) | Menu;
   };
   footer?: {
-    logo?: string | Media | null;
+    logo?: (string | null) | Media;
     footer_nav?: (string | null) | Menu;
     include_social_links?: boolean | null;
     colophon?: string | null;
@@ -444,23 +603,12 @@ export interface SiteOption {
   updatedAt?: string | null;
   createdAt?: string | null;
 }
-export interface ThemeOption {
-  id: string;
-  theme_option?:
-    | {
-        optionsSelectField?: string | null;
-        ValueTextField?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-export interface ThemeOpts2 {
-  id: string;
-  ContentEditField?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auth".
+ */
+export interface Auth {
+  [k: string]: unknown;
 }
 
 
