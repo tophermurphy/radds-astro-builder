@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 type ImageSize = {
   width: number;
   height: number;
@@ -7,16 +9,14 @@ type ImageSize = {
   url: string;
   filename: string;
 };
-
-type Sizes = "thumbnail" | "small" | "medium" | "large";
-
+type Sizes = "full" | "small" | "medium" | "large";
 type ImageSizes = {
   [key in Sizes]: ImageSize | undefined;
 };
 
 export interface ImageNode {
   fields?: {
-    size?: "thumbnail" | "small" | "medium" | "large";
+    size?: "full" | "small" | "medium" | "large";
     position?: "left" | "right" | "center";
   };
   value: ImageSize & {
@@ -30,10 +30,15 @@ export interface ImageNode {
 interface Props {
   content: ImageNode;
 }
+const sizeMap = {
+  small: 200,
+  medium: 400,
+  large: 800
+}
 
 const {
   content: {
-    fields: { size, position = "left" } = {},
+    fields,
     value: { url, id, alt, filename, width = 200, height = 100, sizes },
   },
 } = Astro.props;
@@ -42,23 +47,28 @@ const justifyMap = {
   center: "justify-content-center",
   right: "justify-content-end"
 }
-const justify = justifyMap[position] || 'justify-content-start';
+const justify = justifyMap[fields?.position ?? 'center'] || 'justify-content-start';
 
-
-const imgSize = sizes && size !== undefined && sizes[size] ? sizes[size] : false;
 
 const prefix = import.meta.env.MEDIAPATH || '/media/';
-
+const imgWidth = fields?.size === 'full' ? width : sizeMap[fields?.size ?? 'medium'];
+const imgHeight = fields?.size === 'full' ? height : (imgWidth * height) / width;
 
 let imageProps = {
-  width: imgSize ?imgSize.width : width,
-  height: imgSize ? imgSize.height : height,
-  src: imgSize ? prefix + imgSize.filename : prefix + filename,
+  width: imgWidth,
+  height: imgHeight,
+  src: prefix + filename,
   alt: alt || ""
 }
-
 ---
 
-<div class:list={['d-flex', justify]} >
-  <img {...imageProps} />
+<div class:list={['lexical-media', 'd-flex', justify]} >
+  <Image {...imageProps}  />
 </div>
+
+<style lang="css">
+  .lexical-media > img{
+    max-width: 100%;
+    height: auto;
+  }
+</style>

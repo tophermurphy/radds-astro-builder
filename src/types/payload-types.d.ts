@@ -113,10 +113,11 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title?: string | null;
-  sections?: (SectionSection | SectionRow | SectionColumns | SectionCarousel)[] | null;
   slug?: string | null;
   default_header?: boolean | null;
   layout?: ('default' | 'blank') | null;
+  sections?: (SectionSection | SectionRow | SectionColumns | SectionCarousel)[] | null;
+  meta_title?: string | null;
   description?: string | null;
   meta_image?: (string | null) | Media;
   updatedAt: string;
@@ -307,14 +308,22 @@ export interface BlockDivider {
  * via the `definition` "BlockImage".
  */
 export interface BlockImage {
-  justify: 'left' | 'center' | 'right';
-  align: 'flex-start' | 'center' | 'flex-end';
-  fill?: boolean | null;
   image: string | Media;
+  format?: ('size' | 'fill') | null;
+  size?: {
+    width: number;
+    height: number;
+    justify?: ('left' | 'center' | 'right') | null;
+    align?: ('flex-start' | 'center' | 'flex-end') | null;
+  };
+  fill?: {
+    'max-height'?: number | null;
+    'x-pos'?: string | null;
+    'y-pos'?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'image';
-  height?: number;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -609,9 +618,4 @@ export interface SiteOption {
  */
 export interface Auth {
   [k: string]: unknown;
-}
-
-
-declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
 }

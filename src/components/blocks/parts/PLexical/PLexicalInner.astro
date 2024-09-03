@@ -1,11 +1,12 @@
 ---
 import type { Node } from "./types";
+
 interface Props {
     children: Node;
 }
 
-const { children } = Astro.props;
-const { format, text = "", fields } = children;
+const { children } = Astro.props
+const { format, text = "" } = children;
 
 // Text node formatting
 export const IS_BOLD = 1;

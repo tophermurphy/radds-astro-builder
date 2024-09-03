@@ -69,4 +69,17 @@ export type SerializedLexicalNode = {
       [key: string]: any;
     };
   };
+
+  export type TextNode = {
+    detail: number;
+    format: number;
+    mode: string;
+    style: string;
+    text: string;
+    type: "text";
+    version: number;
+    fields?: {
+      [key: string]: any;
+    };
+  }
   

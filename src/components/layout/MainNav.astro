@@ -24,20 +24,24 @@ const mainNav = typeof main_nav !== 'string' && main_nav ? main_nav.nav || [] : 
       ) : title ? (
         <NavbarBrandTitle title={title} />
       ) : null
+    }{
+      mainNav.length > 0 && (
+      <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNav"
+          aria-controls="mainNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      )
     }
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#mainNav"
-      aria-controls="mainNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
     {
-      mainNav.length && (
+      mainNav.length > 0 && (
         <div class="collapse navbar-collapse" id="mainNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             {mainNav.map((item, i) => {
@@ -110,9 +114,7 @@ const mainNav = typeof main_nav !== 'string' && main_nav ? main_nav.nav || [] : 
 <style lang="scss">
   @include media-breakpoint-up(lg) {
      .navbar-collapse {
-   flex: 0 1 auto;
- }
+      flex: 0 1 auto;
+    }
   } 
-
-
 </style>
