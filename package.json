@@ -1,7 +1,7 @@
 {
-  "name": "radd-frontend",
+  "name": "radds-astro-builder",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "engines": {
     "node": ">=18.14.1"
   },
