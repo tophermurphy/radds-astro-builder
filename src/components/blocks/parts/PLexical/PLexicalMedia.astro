@@ -1,46 +1,55 @@
 ---
 import { Image } from 'astro:assets';
 
+type ImageSize = {
+  width: number;
+  height: number;
+  mimeType: string;
+  filesize: number;
+  url: string;
+  filename: string;
+};
+type Sizes = "full" | "small" | "medium" | "large";
+type ImageSizes = {
+  [key in Sizes]: ImageSize | undefined;
+};
+
 export interface ImageNode {
   fields?: {
     size?: "full" | "small" | "medium" | "large";
     position?: "left" | "right" | "center";
   };
-  value:  {
+  value: ImageSize & {
     id: string;
     alt?: string;
-    width: number;
-    height: number;
-    mimeType: string;
-    filesize: number;
-    url: string;
-    filename: string;
+    sizes: ImageSizes;
+
   };
 }
 
 interface Props {
   content: ImageNode;
 }
-
-const {
-  content: {
-    fields,
-    value: { alt, filename, width = 200, height = 100 },
-  },
-} = Astro.props;
-
 const sizeMap = {
   small: 200,
   medium: 400,
   large: 800
 }
+
+const {
+  content: {
+    fields,
+    value: { url, id, alt, filename, width = 200, height = 100, sizes },
+  },
+} = Astro.props;
 const justifyMap = {
   left: "justify-content-start",
   center: "justify-content-center",
   right: "justify-content-end"
 }
-
 const justify = justifyMap[fields?.position ?? 'center'] || 'justify-content-start';
+
+
 const prefix = import.meta.env.MEDIAPATH || '/media/';
 const imgWidth = fields?.size === 'full' ? width : sizeMap[fields?.size ?? 'medium'];
 const imgHeight = fields?.size === 'full' ? height : (imgWidth * height) / width;
@@ -58,7 +67,7 @@ let imageProps = {
 </div>
 
 <style lang="css">
-  .lexical-media > img {
+  .lexical-media > img{
     max-width: 100%;
     height: auto;
   }
